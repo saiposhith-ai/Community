@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ post.title }} - Shramic Community</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.svg') }}"
+      type="image/svg+xml"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Source+Sans+Pro:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --st-patricks-blue: hsl(236, 57%, 28%);
+        --amaranth-purple: hsl(335, 88%, 38%);
+        --royal-blue-dark: hsl(231, 68%, 21%);
+        --chrome-yellow: hsl(39, 100%, 52%);
+        --space-cadet-1: hsl(230, 41%, 25%);
+        --space-cadet-2: hsl(230, 59%, 16%);
+        --winter-sky_50: hsla(335, 87%, 53%, 0.5);
+        --purple-navy: hsl(236, 26%, 43%);
+        --ksu-purple: hsl(275, 54%, 33%);
+        --winter-sky: hsl(335, 87%, 53%);
+        --razzmatazz: hsl(335, 87%, 51%);
+        --platinum: hsl(0, 0%, 90%);
+        --black_70: hsla(0, 0%, 0%, 0.7);
+        --rajah: hsl(29, 99%, 67%);
+        --white: hsl(0, 0%, 100%);
+        --light-bg: hsl(0, 0%, 98%);
+        --text-dark: hsl(0, 0%, 13%);
+        --text-light: hsl(0, 0%, 33%);
+        --gradient-1: linear-gradient(
+          90deg,
+          var(--royal-blue-dark) 0,
+          var(--ksu-purple) 51%,
+          var(--royal-blue-dark)
+        );
+        --gradient-2: linear-gradient(90deg, var(--razzmatazz), var(--rajah));
+        --ff-source-sans-pro: "Source Sans Pro", sans-serif;
+        --ff-poppins: "Poppins", sans-serif;
+        --fs-1: 4.2rem;
+        --fs-2: 3.8rem;
+        --fs-3: 3.2rem;
+        --fs-4: 2.5rem;
+        --fs-5: 2.4rem;
+        --fs-6: 2rem;
+        --fs-7: 1.8rem;
+        --fs-8: 1.5rem;
+        --fw-500: 500;
+        --fw-600: 600;
+        --fw-700: 700;
+        --radius-4: 4px;
+        --radius-8: 8px;
+        --radius-12: 12px;
+        --section-padding: 60px;
+        --transition-1: 0.15s ease;
+        --transition-2: 0.35s ease;
+        --cubic-in: cubic-bezier(0.51, 0.03, 0.64, 0.28);
+        --cubic-out: cubic-bezier(0.33, 0.85, 0.56, 1.02);
+        --shadow: 0 5px 20px 1px hsla(220, 63%, 33%, 0.1);
+        --shadow-lg: 0 8px 30px hsla(220, 63%, 33%, 0.15);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      li {
+        list-style: none;
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      a,
+      img,
+      span,
+      input,
+      button,
+      ion-icon {
+        display: block;
+      }
+      button,
+      input {
+        background: none;
+        border: none;
+        font: inherit;
+      }
+      button {
+        cursor: pointer;
+      }
+      input {
+        width: 100%;
+      }
+      ion-icon {
+        pointer-events: none;
+      }
+      img {
+        height: auto;
+        max-width: 100%;
+      }
+      address {
+        font-style: normal;
+      }
+
+      html {
+        font-family: var(--ff-poppins);
+        font-size: 10px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--white);
+        color: var(--purple-navy);
+        font-size: 1.6rem;
+        line-height: 1.6;
+      }
+
+      .container {
+        padding-inline: 15px;
+        max-width: 1200px;
+        margin-inline: auto;
+      }
+
+      .h1,
+      .h2,
+      .h3 {
+        font-family: var(--ff-source-sans-pro);
+        line-height: 1.3;
+      }
+
+      .h2 {
+        font-size: var(--fs-3);
+        color: var(--st-patricks-blue);
+      }
+      .h3 {
+        font-size: var(--fs-5);
+        color: var(--st-patricks-blue);
+      }
+
+      .btn {
+        background-image: var(--gradient-2);
+        background-size: 200%;
+        color: var(--white);
+        padding: 12px 35px;
+        font-size: var(--fs-8);
+        font-weight: var(--fw-500);
+        border-radius: 0 25px;
+        transition: var(--transition-2);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: none;
+      }
+
+      .btn:is(:hover, :focus) {
+        background-position: right;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .section {
+        padding-block: var(--section-padding);
+      }
+
+      .section-title {
+        color: var(--st-patricks-blue);
+        font-size: var(--fs-3);
+        margin-block-end: 40px;
+      }
+
+      .underline {
+        position: relative;
+        padding-bottom: 25px;
+      }
+
+      .underline::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 70px;
+        height: 6px;
+        background-image: var(--gradient-2);
+        border-radius: 10px;
+      }
+
+      /* Header Styles */
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding-block: 14px;
+        z-index: 100;
+        transition: var(--transition-1);
+        background-color: var(--white);
+        box-shadow: 0 2px 30px hsla(0, 0%, 0%, 0.1);
+      }
+
+      .header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .logo {
+        color: var(--st-patricks-blue);
+        font-family: var(--ff-source-sans-pro);
+        font-size: var(--fs-3);
+        font-weight: var(--fw-700);
+      }
+
+      .nav-open-btn {
+        color: var(--st-patricks-blue);
+        font-size: 32px;
+        padding: 4px;
+      }
+
+      .navbar {
+        background-color: var(--white);
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 100%;
+        max-width: 280px;
+        min-height: 100%;
+        padding: 20px;
+        visibility: hidden;
+        z-index: 200;
+        transition: 0.25s var(--cubic-in);
+        box-shadow: var(--shadow-lg);
+      }
+
+      .navbar.active {
+        transform: translateX(280px);
+        visibility: visible;
+        transition: 0.5s var(--cubic-out);
+      }
+
+      .navbar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-block: 10px 30px;
+      }
+
+      .navbar-top .logo {
+        font-size: 4.2rem;
+      }
+
+      .nav-close-btn {
+        color: var(--space-cadet-1);
+        font-size: 2.8rem;
+        padding: 4px;
+      }
+
+      .navbar-item:not(:last-child) {
+        border-bottom: 1px solid var(--platinum);
+      }
+
+      .navbar-link {
+        color: var(--space-cadet-1);
+        font-size: var(--fs-8);
+        font-weight: var(--fw-600);
+        padding-block: 12px;
+        transition: var(--transition-1);
+      }
+
+      .navbar-link:hover {
+        color: var(--winter-sky);
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background-color: var(--black_70);
+        z-index: 150;
+        opacity: 0;
+        pointer-events: none;
+        transition: var(--transition-2);
+      }
+
+      .overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      /* Flash Messages */
+      .flash-messages {
+        position: fixed;
+        top: 85px;
+        right: 20px;
+        z-index: 1050;
+        width: 100%;
+        max-width: 350px;
+      }
+
+      .alert {
+        padding: 15px 20px;
+        margin-bottom: 10px;
+        border-radius: var(--radius-8);
+        box-shadow: var(--shadow);
+        animation: slideIn 0.3s ease;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .alert-success {
+        background: #d4edda;
+        color: #155724;
+        border-left: 5px solid #28a745;
+      }
+
+      .alert-error {
+        background: #f8d7da;
+        color: #721c24;
+        border-left: 5px solid #dc3545;
+      }
+
+      /* Blog Detail Content */
+      .blog-detail {
+        padding-top: 120px;
+        padding-bottom: 80px;
+      }
+
+      .blog-detail-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .blog-header {
+        margin-bottom: 40px;
+      }
+
+      .blog-title {
+        font-size: var(--fs-2);
+        color: var(--st-patricks-blue);
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+
+      .blog-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 30px;
+      }
+
+      .meta-item {
+        font-size: 1.5rem;
+        color: var(--text-light);
+      }
+
+      .meta-item time {
+        color: var(--text-dark);
+        font-weight: var(--fw-600);
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 1.5rem;
+        color: var(--text-light);
+      }
+
+      .breadcrumb a {
+        color: hsl(236.84deg 54.29% 27.45%);
+        font-weight: var(--fw-600);
+        text-decoration: none;
+        transition: var(--transition-1);
+      }
+
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+
+      .breadcrumb-current {
+        color: var(--text-dark);
+        font-weight: var(--fw-600);
+      }
+
+      .share-btn {
+        background: none;
+        color: var(--winter-sky);
+        font-weight: var(--fw-600);
+        padding: 10px 20px;
+        border: 2px solid var(--winter-sky);
+        border-radius: var(--radius-8);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: var(--transition-2);
+      }
+
+      .share-btn:hover {
+        background-image: var(--gradient-2);
+        color: var(--white);
+        border-color: transparent;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
+      }
+
+      .share-btn ion-icon {
+        font-size: 20px;
+      }
+
+      .blog-image {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius-12);
+        margin-bottom: 40px;
+        box-shadow: var(--shadow);
+      }
+
+      .blog-content {
+        line-height: 1.8;
+        font-size: 1.7rem;
+        color: var(--text-dark);
+      }
+
+      .blog-content p {
+        margin-bottom: 20px;
+      }
+
+      .blog-content h2,
+      .blog-content h3,
+      .blog-content h4 {
+        margin-top: 30px;
+        margin-bottom: 15px;
+        color: var(--st-patricks-blue);
+      }
+
+      .blog-content ul,
+      .blog-content ol {
+        margin-left: 30px;
+        margin-bottom: 20px;
+      }
+
+      .blog-content li {
+        list-style: disc;
+        margin-bottom: 8px;
+      }
+
+      /* Comments Section */
+      .comments-section {
+        margin-top: 80px;
+      }
+
+      .comments-header {
+        margin-bottom: 30px;
+      }
+
+      .comment-card {
+        background: var(--light-bg);
+        border: 1px solid var(--platinum);
+        padding: 25px;
+        border-radius: var(--radius-12);
+        margin-bottom: 20px;
+        transition: var(--transition-2);
+      }
+
+      .comment-card:hover {
+        box-shadow: var(--shadow);
+        transform: translateY(-2px);
+      }
+
+      .comment-author {
+        font-weight: var(--fw-600);
+        color: var(--st-patricks-blue);
+        font-size: 1.7rem;
+        margin-bottom: 5px;
+      }
+
+      .comment-date {
+        font-size: 1.3rem;
+        color: var(--purple-navy);
+        margin-bottom: 12px;
+      }
+
+      .comment-text {
+        color: var(--text-dark);
+        line-height: 1.7;
+      }
+
+      .no-comments {
+        text-align: center;
+        padding: 40px;
+        color: var(--purple-navy);
+        font-style: italic;
+      }
+
+      /* Comment Form */
+      .comment-form-section {
+        margin-top: 60px;
+      }
+
+      .comment-form {
+        margin-top: 30px;
+      }
+
+      .comment-form input,
+      .comment-form textarea {
+        border: 2px solid var(--platinum);
+        padding: 15px 20px;
+        border-radius: var(--radius-8);
+        margin-bottom: 20px;
+        font-size: 1.6rem;
+        width: 100%;
+        transition: var(--transition-1);
+        font-family: var(--ff-poppins);
+      }
+
+      .comment-form input:focus,
+      .comment-form textarea:focus {
+        outline: none;
+        border-color: var(--winter-sky);
+        box-shadow: 0 0 0 3px var(--winter-sky_50);
+      }
+
+      .comment-form textarea {
+        min-height: 150px;
+        resize: vertical;
+      }
+
+      /* Footer Styles */
+      .footer {
+        font-size: var(--fs-8);
+      }
+
+      .footer a {
+        color: inherit;
+        transition: var(--transition-1);
+      }
+
+      .footer-top {
+        background-image: url("{{ url_for('static', filename='images/footer-bg.png') }}"),
+          var(--gradient-1);
+        background-repeat: no-repeat;
+        background-size: auto, 200%;
+        background-position: center, center;
+        color: var(--white);
+        padding: 60px 0;
+      }
+
+      .footer-brand .logo {
+        font-weight: var(--fw-700);
+        margin-block-end: 15px;
+        color: var(--white);
+      }
+
+      .footer-brand .text {
+        margin-bottom: 20px;
+        line-height: 1.7;
+      }
+
+      .social-list {
+        display: flex;
+        gap: 10px;
+      }
+
+      .footer-top .social-link {
+        background-color: var(--white);
+        color: var(--winter-sky);
+        font-size: 18px;
+        padding: 10px;
+        border-radius: 50%;
+        transition: var(--transition-2);
+      }
+
+      .footer-top .social-link:is(:hover, :focus) {
+        background-image: var(--gradient-2);
+        color: var(--white);
+        transform: translateY(-3px);
+      }
+
+      .footer-list-title {
+        font-family: var(--ff-source-sans-pro);
+        font-size: var(--fs-5);
+        font-weight: var(--fw-700);
+        margin-block-end: 20px;
+      }
+
+      .footer-link {
+        padding-block: 8px;
+        transition: var(--transition-1);
+      }
+
+      .footer-link:hover {
+        text-decoration: underline;
+        color: var(--chrome-yellow);
+      }
+
+      .footer-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 15px;
+        padding-block: 10px;
+      }
+
+      .footer-item-icon {
+        background-image: var(--gradient-2);
+        padding: 13px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .footer-item-link {
+        transition: var(--transition-1);
+      }
+
+      .footer-item-link:hover {
+        text-decoration: underline;
+      }
+
+      .footer-bottom {
+        background-color: var(--space-cadet-2);
+        padding: 25px 20px;
+        text-align: center;
+        color: var(--white);
+      }
+
+      .copyright-link {
+        color: var(--chrome-yellow);
+        font-weight: var(--fw-600);
+      }
+
+      .copyright-link:hover {
+        text-decoration: underline;
+      }
+
+      /* Go Top Button */
+      .go-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: var(--winter-sky);
+        color: var(--white);
+        font-size: 2rem;
+        padding: 14px;
+        border-radius: var(--radius-8);
+        box-shadow: -3px 3px 15px var(--winter-sky_50);
+        z-index: 90;
+        visibility: hidden;
+        opacity: 0;
+        transition: var(--transition-2);
+      }
+
+      .go-top.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(-5px);
+      }
+
+      .go-top:hover {
+        background-image: var(--gradient-2);
+        transform: translateY(-8px);
+      }
+
+      /* Responsive Design */
+      @media (min-width: 550px) {
+        .container {
+          max-width: 550px;
+        }
+
+        .blog-meta {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .container {
+          max-width: 720px;
+        }
+
+        .blog-title {
+          font-size: var(--fs-1);
+        }
+
+        .footer-top .container {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 40px;
+        }
+      }
+
+      @media (min-width: 992px) {
+        .container {
+          max-width: 950px;
+        }
+
+        .header {
+          padding-block: 20px;
+        }
+
+        .overlay,
+        .nav-open-btn,
+        .navbar-top {
+          display: none;
+        }
+
+        .navbar,
+        .navbar.active {
+          all: unset;
+          margin-inline-start: auto;
+        }
+
+        .navbar-list {
+          display: flex;
+          gap: 30px;
+        }
+
+        .navbar-item:not(:last-child) {
+          border-bottom: none;
+        }
+
+        .navbar-link {
+          color: var(--st-patricks-blue);
+          padding: 0;
+        }
+
+        .footer-top .container {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .container {
+          max-width: 1200px;
+        }
+
+        .footer-top .container {
+          grid-template-columns: 1fr 0.5fr 0.7fr 0.5fr 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body id="top">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div class="flash-messages">
+      {% for category, message in messages %}
+      <div
+        class="alert alert-{{ 'error' if category == 'error' else 'success' }}"
+      >
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+
+    <!-- Header -->
+    <header class="header" data-header>
+      <div class="container">
+        <div class="overlay" data-overlay></div>
+        <a href="{{ url_for('index') }}">
+          <h1 class="logo">Shramic Community</h1>
+        </a>
+        <nav class="navbar" data-navbar>
+          <div class="navbar-top">
+            <a href="{{ url_for('index') }}" class="logo">Shramic Community</a>
+            <button
+              class="nav-close-btn"
+              aria-label="Close Menu"
+              data-nav-close-btn
+            >
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <a href="{{ url_for('index') }}" class="navbar-link">Home</a>
+            </li>
+            <li class="navbar-item">
+              <a href="{{ url_for('index') }}#about" class="navbar-link"
+                >About</a
+              >
+            </li>
+            <li class="navbar-item">
+              <a href="{{ url_for('services') }}" class="navbar-link"
+                >Services</a
+              >
+            </li>
+            <li class="navbar-item">
+              <a href="{{ url_for('index') }}#features" class="navbar-link"
+                >Features</a
+              >
+            </li>
+            <li class="navbar-item">
+              <a href="{{ url_for('blog') }}" class="navbar-link">Blog</a>
+            </li>
+            <li class="navbar-item">
+              <a href="{{ url_for('contact') }}" class="navbar-link"
+                >Contact Us</a
+              >
+            </li>
+          </ul>
+        </nav>
+        <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <article>
+        <section class="section blog-detail">
+          <div class="container">
+            <div class="blog-detail-content">
+              <!-- Blog Header -->
+              <div class="blog-header">
+                <h1 class="blog-title">{{ post.title }}</h1>
+
+                <div class="blog-meta">
+                  <div>
+                    <p class="meta-item">
+                      Published on:
+                      <time datetime="{{ post.date }}">{{ post.date }}</time>
+                    </p>
+                    <p class="breadcrumb">
+                      <a href="{{ url_for('blog') }}">Blog</a> /
+                      <span class="breadcrumb-current">
+                        {{ ' '.join(post.title.split()[:2]) }}{% if
+                        post.title.split()|length > 2 %}...{% endif %}
+                      </span>
+                    </p>
+                  </div>
+
+                  <button
+                    class="share-btn"
+                    aria-label="Share this post"
+                    onclick="sharePost({{ post.id }}, '{{ post.title | e }}', '{{ post.content[:100] | striptags | e }}')"
+                  >
+                    <ion-icon name="share-social-outline"></ion-icon>
+                    <span>Share</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Blog Image -->
+              <figure>
+                <img
+                  src="{{ post.image or url_for('static', filename='images/default-blog.jpg') }}"
+                  alt="{{ post.title }}"
+                  class="blog-image"
+                />
+              </figure>
+
+              <!-- Blog Content -->
+              <div class="blog-content">{{ post.content | safe }}</div>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section blog-detail-content">
+              <div class="comments-header">
+                <h3 class="h3 section-title underline">
+                  Comments ({{ post.comments|length if post.comments else 0 }})
+                </h3>
+              </div>
+
+              {% if post.comments %} {% for comment in post.comments %}
+              <div class="comment-card">
+                <p class="comment-author">{{ comment.name }}</p>
+                <p class="comment-date">{{ comment.date }}</p>
+                <p class="comment-text">{{ comment.comment }}</p>
+              </div>
+              {% endfor %} {% else %}
+              <p class="no-comments">Be the first to comment!</p>
+              {% endif %}
+            </div>
+
+            <!-- Comment Form -->
+            <div class="comment-form-section blog-detail-content">
+              <h3 class="h3 section-title underline">Leave a Comment</h3>
+              <form
+                action="{{ url_for('add_comment', post_id=post.id) }}"
+                method="POST"
+                class="comment-form"
+              >
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Your Name"
+                  required
+                />
+                <textarea
+                  name="comment"
+                  placeholder="Your Comment"
+                  required
+                ></textarea>
+                <button type="submit" class="btn">
+                  <ion-icon name="chatbubbles-outline"></ion-icon>
+                  <span>Post Comment</span>
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-top section">
+        <div class="container">
+          <div class="footer-brand">
+            <a href="{{ url_for('index') }}" class="logo">Shramic Community</a>
+            <p class="text">
+              {{ site_content.hero.title if site_content and site_content.hero
+              else 'We Design Interfaces That Users Love' }}
+            </p>
+            <ul class="social-list">
+              <li>
+                <a href="#" class="social-link">
+                  <ion-icon name="logo-facebook"></ion-icon>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/shramic.info"
+                  class="social-link"
+                >
+                  <ion-icon name="logo-instagram"></ion-icon>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="social-link">
+                  <ion-icon name="logo-twitter"></ion-icon>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Our links</p></li>
+            <li>
+              <a href="{{ url_for('index') }}" class="footer-link">Home</a>
+            </li>
+            <li>
+              <a href="{{ url_for('index') }}#about" class="footer-link"
+                >About Us</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('services') }}" class="footer-link"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://agriconnect1.pythonanywhere.com/"
+                class="footer-link"
+                >Social Hub</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('blog') }}" class="footer-link">Blog</a>
+            </li>
+          </ul>
+
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Our Services</p></li>
+            {% for service in services %}
+            <li>
+              <a href="{{ url_for('services') }}" class="footer-link"
+                >{{ service.title }}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Other links</p></li>
+            <li><a href="{{ url_for('faq') }}" class="footer-link">FAQ</a></li>
+            <li>
+              <a href="{{ url_for('portfolio') }}" class="footer-link"
+                >Portfolio</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('privacy') }}" class="footer-link"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('terms') }}" class="footer-link"
+                >Terms & Conditions</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('support') }}" class="footer-link">Support</a>
+            </li>
+          </ul>
+
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Contact Us</p></li>
+            <li class="footer-item">
+              <div class="footer-item-icon">
+                <ion-icon name="call"></ion-icon>
+              </div>
+              <div>
+                <a href="tel:+91 9876543210" class="footer-item-link"
+                  >+91 98765 43210</a
+                >
+              </div>
+            </li>
+            <li class="footer-item">
+              <div class="footer-item-icon">
+                <ion-icon name="mail"></ion-icon>
+              </div>
+              <div>
+                <a
+                  href="mailto:sharmikconnect@gmail.com"
+                  class="footer-item-link"
+                  >sharmikconnect@gmail.com</a
+                >
+              </div>
+            </li>
+            <li class="footer-item">
+              <div class="footer-item-icon">
+                <ion-icon name="location"></ion-icon>
+              </div>
+              <address class="footer-item-link">
+                Bengaluru, Karnataka, India
+              </address>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">
+          &copy; 2024 <a href="#" class="copyright-link">Shramic Community</a>.
+          All Right Reserved
+        </p>
+      </div>
+    </footer>
+
+    <!-- Go Top Button -->
+    <a href="#top" class="go-top" aria-label="Go To Top" data-go-top>
+      <ion-icon name="arrow-up-outline"></ion-icon>
+    </a>
+
+    <!-- Scripts -->
+    <script>
+      "use strict";
+
+      // Mobile Navigation Toggle
+      const navOpenBtn = document.querySelector("[data-nav-open-btn]");
+      const navbar = document.querySelector("[data-navbar]");
+      const navCloseBtn = document.querySelector("[data-nav-close-btn]");
+      const overlay = document.querySelector("[data-overlay]");
+      const elemArr = [navCloseBtn, overlay, navOpenBtn];
+
+      for (let i = 0; i < elemArr.length; i++) {
+        elemArr[i].addEventListener("click", function () {
+          navbar.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
+      }
+
+      // Close navbar when clicking on links
+      const navbarLinks = document.querySelectorAll("[data-navbar-link]");
+      for (let i = 0; i < navbarLinks.length; i++) {
+        navbarLinks[i].addEventListener("click", function () {
+          navbar.classList.remove("active");
+          overlay.classList.remove("active");
+        });
+      }
+
+      // Header scroll effect and Go Top button
+      const header = document.querySelector("[data-header]");
+      const goTopBtn = document.querySelector("[data-go-top]");
+
+      window.addEventListener("scroll", function () {
+        if (window.scrollY >= 100) {
+          goTopBtn.classList.add("active");
+        } else {
+          goTopBtn.classList.remove("active");
+        }
+      });
+
+      // Flash message auto-hide
+      setTimeout(function () {
+        const flashMessages = document.querySelector(".flash-messages");
+        if (flashMessages) {
+          flashMessages.style.transition = "opacity 0.5s ease";
+          flashMessages.style.opacity = "0";
+          setTimeout(() => flashMessages.remove(), 500);
+        }
+      }, 5000);
+
+      /**
+       * Share post functionality using Web Share API
+       */
+      async function sharePost(postId, title, text) {
+        const url = window.location.href;
+        const shareData = {
+          title: title,
+          text: text,
+          url: url,
+        };
+
+        try {
+          await navigator.share(shareData);
+          console.log("Post shared successfully");
+          // Track share on server
+          fetch(`/blog/${postId}/share`, { method: "POST" });
+        } catch (err) {
+          console.error("Share failed:", err.message);
+        }
+      }
+
+      // Hide share button if Web Share API is not supported
+      document.addEventListener("DOMContentLoaded", () => {
+        if (!navigator.share) {
+          const shareButtons = document.querySelectorAll(".share-btn");
+          shareButtons.forEach((button) => {
+            button.style.display = "none";
+          });
+        }
+      });
+    </script>
+
+    <!-- Ionicons -->
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

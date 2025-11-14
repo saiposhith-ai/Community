@@ -1,0 +1,111 @@
+{% extends 'admin/layout.html' %} {% block title %}Dashboard | Admin Panel{%
+endblock %} {% block content %}
+<div class="section-title-wrapper">
+  <h2 class="h2 section-title">Dashboard</h2>
+</div>
+
+<section class="home">
+  <div class="card-wrapper">
+    <div class="card task-card">
+      <div class="card-icon icon-box blue">
+        <span class="material-symbols-rounded icon">design_services</span>
+      </div>
+      <div>
+        <data class="card-data">{{ stats.services }}</data>
+        <p class="card-text">Total Services</p>
+      </div>
+    </div>
+
+    <div class="card task-card">
+      <div class="card-icon icon-box green">
+        <span class="material-symbols-rounded icon">star</span>
+      </div>
+      <div>
+        <data class="card-data">{{ stats.features }}</data>
+        <p class="card-text">Total Features</p>
+      </div>
+    </div>
+
+    <div class="card task-card">
+      <div class="card-icon icon-box orange">
+        <span class="material-symbols-rounded icon">feed</span>
+      </div>
+      <div>
+        <data class="card-data">{{ stats.blog_posts }}</data>
+        <p class="card-text">Blog Posts</p>
+      </div>
+    </div>
+
+    <div class="card task-card">
+      <div class="card-icon icon-box purple">
+        <span class="material-symbols-rounded icon">campaign</span>
+      </div>
+      <div>
+        <data class="card-data">{{ stats.announcements }}</data>
+        <p class="card-text">Announcements</p>
+      </div>
+    </div>
+
+    <div class="card task-card">
+      <div class="card-icon icon-box red">
+        <span class="material-symbols-rounded icon">mail</span>
+      </div>
+      <div>
+        <data class="card-data">{{ stats.contacts }}</data>
+        <p class="card-text">Contact Messages</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-title-wrapper">
+  <h2 class="section-title">Recent Contact Messages</h2>
+  <a href="{{ url_for('admin_contacts') }}" class="btn btn-primary">
+    <span class="material-symbols-rounded icon">visibility</span>
+    <span>View All Contacts</span>
+  </a>
+</div>
+
+<div class="table-container">
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contact in recent_contacts %}
+      <tr>
+        <td data-label="Name">{{ contact.name }}</td>
+        <td data-label="Email">{{ contact.email }}</td>
+        <td data-label="Subject">{{ contact.subject }}</td>
+        <td data-label="Date">{{ contact.date }}</td>
+        <td data-label="Status">
+          <div
+            class="card-badge {% if contact.status == 'new' %}blue{% else %}green{% endif %}"
+          >
+            {{ contact.status|capitalize }}
+          </div>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="5" style="text-align: center; padding: 20px; color: #666">
+          No recent contacts found.
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .card-icon.purple {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+</style>
+{% endblock %}

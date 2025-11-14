@@ -1,0 +1,122 @@
+{% extends 'admin/layout.html' %} {% block title %}Site Content | Admin Panel{%
+endblock %} {% block content %}
+<div class="section-title-wrapper">
+  <h2 class="h2 section-title">Edit Site Content</h2>
+</div>
+
+<div class="card form-card">
+  <form method="POST" action="{{ url_for('admin_site_content') }}">
+    <fieldset
+      class="form-group"
+      style="
+        border: 1px solid var(--border-color);
+        padding: 20px;
+        border-radius: var(--radius);
+        margin-bottom: 25px;
+      "
+    >
+      <legend
+        style="padding: 0 10px; font-weight: 600; color: var(--heading-color)"
+      >
+        Hero Section
+      </legend>
+      <div class="form-group">
+        <label for="hero_subtitle">Subtitle</label>
+        <input
+          type="text"
+          id="hero_subtitle"
+          name="hero_subtitle"
+          value="{{ site_content.hero.subtitle }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="hero_title">Title</label>
+        <input
+          type="text"
+          id="hero_title"
+          name="hero_title"
+          value="{{ site_content.hero.title }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="hero_description">Description</label>
+        <textarea id="hero_description" name="hero_description">
+{{ site_content.hero.description }}</textarea
+        >
+      </div>
+    </fieldset>
+
+    <fieldset
+      class="form-group"
+      style="
+        border: 1px solid var(--border-color);
+        padding: 20px;
+        border-radius: var(--radius);
+      "
+    >
+      <legend
+        style="padding: 0 10px; font-weight: 600; color: var(--heading-color)"
+      >
+        About Section
+      </legend>
+      <div class="form-group">
+        <label for="about_title">Title</label>
+        <input
+          type="text"
+          id="about_title"
+          name="about_title"
+          value="{{ site_content.about.title }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="about_description1">Description Paragraph 1</label>
+        <textarea id="about_description1" name="about_description1">
+{{ site_content.about.description1 }}</textarea
+        >
+      </div>
+      <div class="form-group">
+        <label for="about_description2">Description Paragraph 2</label>
+        <textarea id="about_description2" name="about_description2">
+{{ site_content.about.description2 }}</textarea
+        >
+      </div>
+      <h3 style="margin-bottom: 15px; color: var(--heading-color)">Stats</h3>
+      <div class="form-group">
+        <label for="stats_clients">Happy Clients</label>
+        <input
+          type="number"
+          id="stats_clients"
+          name="stats_clients"
+          value="{{ site_content.about.stats.clients }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="stats_projects">Projects Completed</label>
+        <input
+          type="number"
+          id="stats_projects"
+          name="stats_projects"
+          value="{{ site_content.about.stats.projects }}"
+        />
+      </div>
+      <div class="form-group">
+        <label for="stats_years">Years of Experience</label>
+        <input
+          type="number"
+          id="stats_years"
+          name="stats_years"
+          value="{{ site_content.about.stats.years }}"
+        />
+      </div>
+    </fieldset>
+
+    <button
+      type="submit"
+      class="btn btn-primary btn-submit"
+      style="margin-top: 20px"
+    >
+      Update Site Content
+    </button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'admin/layout.html' %} {% block title %}Edit {{ page_name|capitalize
+}} Page | Admin Panel{% endblock %} {% block content %}
+<div class="section-title-wrapper">
+  <h2 class="h2 section-title">Edit Page: {{ page_name|capitalize }}</h2>
+  <a href="{{ url_for('admin_pages') }}" class="btn">
+    <span class="material-symbols-rounded icon">arrow_back</span>
+    <span>Back to Pages</span>
+  </a>
+</div>
+
+<div class="card form-card">
+  <form
+    method="POST"
+    action="{{ url_for('admin_edit_page', page_name=page_name) }}"
+  >
+    <div class="form-group">
+      <label for="title">Page Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="{{ page.title }}"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="content">Page Content</label>
+      <textarea id="content" name="content" required rows="10">
+{{ page.content }}</textarea
+      >
+    </div>
+    <button type="submit" class="btn btn-primary btn-submit">
+      Update Page
+    </button>
+  </form>
+</div>
+{% endblock %}

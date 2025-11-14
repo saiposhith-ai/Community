@@ -1,0 +1,199 @@
+{% extends 'admin/layout.html' %} {% block title %}Manage Announcements | Admin
+Panel{% endblock %} {% block content %}
+<div class="section-title-wrapper">
+  <h2 class="h2 section-title">Announcements</h2>
+  <a href="{{ url_for('admin_add_announcement') }}" class="btn btn-primary">
+    <span class="material-symbols-rounded icon">add</span>
+    <span>Add New Announcement</span>
+  </a>
+</div>
+
+{% if announcements %}
+<div class="table-container">
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Message</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Order</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for announcement in announcements %}
+      <tr>
+        <td data-label="ID">{{ announcement.id }}</td>
+        <td data-label="Message" class="announcement-preview-cell">
+          <div class="announcement-preview-text">
+            {{ announcement.message[:80] }}{% if announcement.message|length >
+            80 %}...{% endif %}
+          </div>
+          {% if announcement.link %}
+          <small class="text-muted">
+            <span
+              class="material-symbols-rounded"
+              style="font-size: 14px; vertical-align: middle"
+              >link</span
+            >
+            {{ announcement.link }}
+          </small>
+          {% endif %}
+        </td>
+        <td data-label="Type">
+          <div
+            class="card-badge {% if announcement.type == 'info' %}blue{% elif announcement.type == 'success' %}green{% elif announcement.type == 'warning' %}orange{% else %}red{% endif %}"
+          >
+            {{ announcement.type|upper }}
+          </div>
+        </td>
+        <td data-label="Status">
+          {% if announcement.is_active %}
+          <div class="card-badge green">
+            <span class="material-symbols-rounded" style="font-size: 14px"
+              >check_circle</span
+            >
+            Active
+          </div>
+          {% else %}
+          <div class="card-badge gray">
+            <span class="material-symbols-rounded" style="font-size: 14px"
+              >cancel</span
+            >
+            Inactive
+          </div>
+          {% endif %}
+        </td>
+        <td data-label="Order">{{ announcement.display_order }}</td>
+        <td data-label="Created">{{ announcement.created_date }}</td>
+        <td data-label="Actions">
+          <div class="action-buttons">
+            <a
+              href="{{ url_for('admin_toggle_announcement', announcement_id=announcement.id) }}"
+              class="icon-box {% if announcement.is_active %}gray{% else %}green{% endif %}"
+              title="{{ 'Deactivate' if announcement.is_active else 'Activate' }}"
+            >
+              <span class="material-symbols-rounded icon">
+                {% if announcement.is_active %}visibility_off{% else
+                %}visibility{% endif %}
+              </span>
+            </a>
+            <a
+              href="{{ url_for('admin_edit_announcement', announcement_id=announcement.id) }}"
+              class="icon-box blue"
+              title="Edit"
+            >
+              <span class="material-symbols-rounded icon">edit</span>
+            </a>
+            <a
+              href="{{ url_for('admin_delete_announcement', announcement_id=announcement.id) }}"
+              class="icon-box red"
+              onclick="return confirmDelete(event)"
+              title="Delete"
+            >
+              <span class="material-symbols-rounded icon">delete</span>
+            </a>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="empty-state">
+  <span class="material-symbols-rounded empty-icon">campaign</span>
+  <h3>No Announcements Yet</h3>
+  <p>
+    Create your first announcement to display news and updates on your site.
+  </p>
+  <a href="{{ url_for('admin_add_announcement') }}" class="btn btn-primary">
+    <span class="material-symbols-rounded icon">add</span>
+    <span>Create Announcement</span>
+  </a>
+</div>
+{% endif %}
+
+<style>
+  .announcement-preview-cell {
+    max-width: 400px;
+  }
+
+  .announcement-preview-text {
+    margin-bottom: 5px;
+    word-wrap: break-word;
+  }
+
+  .text-muted {
+    color: #6c757d;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .action-buttons .icon-box {
+    padding: 8px;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .action-buttons .icon-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .action-buttons .icon-box .icon {
+    font-size: 20px;
+  }
+
+  .card-badge.gray {
+    background: #6c757d;
+    color: white;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+  }
+
+  .empty-icon {
+    font-size: 80px;
+    color: #667eea;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .empty-state h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: var(--text-color, #333);
+  }
+
+  .empty-state p {
+    color: #6c757d;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .action-buttons {
+      justify-content: center;
+    }
+
+    .announcement-preview-cell {
+      max-width: 100%;
+    }
+  }
+</style>
+{% endblock %}

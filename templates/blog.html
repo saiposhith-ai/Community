@@ -1,0 +1,223 @@
+{% extends "base.html" %} {% block title %}Blog - Shramic Community{% endblock
+%} {% block header_class %}active{% endblock %} {% block extra_css %}
+<style>
+  /* Page Hero Section */
+  .page-hero {
+    padding-top: 150px;
+    padding-bottom: 0;
+  }
+
+  /* Blog List Styles */
+  .blog-list {
+    display: grid;
+    gap: 30px;
+  }
+
+  .blog-card {
+    padding: 20px;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius-12);
+    transition: var(--transition-2);
+  }
+
+  .blog-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .blog-card .banner {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    border-radius: var(--radius-12);
+    overflow: hidden;
+    margin-block-end: 15px;
+  }
+
+  .blog-card .banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: var(--transition-2);
+  }
+
+  .blog-card .banner a:is(:hover, :focus) img {
+    transform: scale(1.1);
+  }
+
+  .blog-card .title {
+    color: var(--st-patricks-blue);
+    font-size: var(--fs-6);
+    line-height: 1.2;
+    margin-block-end: 15px;
+    font-weight: var(--fw-600);
+  }
+
+  .blog-card .title > a {
+    color: inherit;
+    transition: var(--transition-1);
+  }
+
+  .blog-card .title > a:is(:hover, :focus) {
+    color: var(--razzmatazz);
+  }
+
+  .blog-card .text {
+    font-size: var(--fs-8);
+    margin-block-end: 15px;
+    color: var(--purple-navy);
+    line-height: 1.6;
+  }
+
+  .blog-card .meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: var(--fs-8);
+    color: var(--purple-navy);
+    font-weight: var(--fw-500);
+    padding-block-end: 10px;
+  }
+
+  .blog-card .meta ion-icon {
+    color: var(--winter-sky);
+    font-size: 22px;
+    --ionicon-stroke-width: 35px;
+  }
+
+  .publish-date,
+  .comment {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .comment {
+    color: inherit;
+    margin-inline-start: auto;
+  }
+
+  .share-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: var(--transition-1);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--winter-sky);
+    font-weight: var(--fw-600);
+  }
+
+  .share-btn:hover {
+    transform: scale(1.1);
+  }
+
+  .share-btn ion-icon {
+    color: var(--winter-sky);
+    font-size: 22px;
+    pointer-events: none;
+  }
+
+  /* Responsive Grid */
+  @media (min-width: 550px) {
+    .blog-card {
+      display: grid;
+      grid-template-columns: 0.75fr 1fr;
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .blog-card .banner {
+      margin-block-end: 0;
+    }
+
+    .blog-card .banner a {
+      height: 100%;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .blog-list {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .blog-card {
+      height: 100%;
+    }
+
+    .blog-card .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Page Hero Section -->
+<section class="section page-hero">
+  <div class="container">
+    <h1 class="h2 section-title underline">Our Blog & News</h1>
+  </div>
+</section>
+
+<!-- Blog List Section -->
+<section class="section blog">
+  <div class="container">
+    <ul class="blog-list">
+      {% for post in posts %}
+      <li>
+        <div class="blog-card">
+          <figure class="banner">
+            <a href="{{ url_for('blog', post_id=post.id) }}">
+              <img
+                src="{{ post.image or url_for('static', filename='images/default-blog.jpg') }}"
+                width="750"
+                height="350"
+                loading="lazy"
+                alt="{{ post.title }}"
+                class="img-cover"
+              />
+            </a>
+          </figure>
+
+          <div class="content">
+            <h3 class="h3 title">
+              <a href="{{ url_for('blog', post_id=post.id) }}"
+                >{{ post.title }}</a
+              >
+            </h3>
+
+            <p class="text">{{ post.content[:150] }}...</p>
+
+            <div class="meta">
+              <div class="publish-date">
+                <ion-icon name="time-outline"></ion-icon>
+                <time datetime="{{ post.date }}">{{ post.date }}</time>
+              </div>
+
+              <div class="comment" aria-label="Comments">
+                <ion-icon name="chatbubble-outline"></ion-icon>
+                <data
+                  value="{{ post.comments|length if post.comments else 0 }}"
+                >
+                  {{ post.comments|length if post.comments else 0 }}
+                </data>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      {% else %}
+      <li>
+        <p style="text-align: center; grid-column: 1 / -1; padding: 40px 0">
+          No blog posts found.
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,506 @@
+{% extends 'admin/layout.html' %}
+
+{% block title %}Edit Announcement | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="section-title-wrapper">
+  <h2 class="h2 section-title">Edit Announcement</h2>
+  <a href="{{ url_for('admin_announcements') }}" class="btn btn-secondary">
+    <span class="material-symbols-rounded icon">arrow_back</span>
+    <span>Back to Announcements</span>
+  </a>
+</div>
+
+<div class="form-container">
+  <div class="form-grid">
+    <!-- Main Form -->
+    <div class="form-card">
+      <form method="POST" action="{{ url_for('admin_edit_announcement', announcement_id=announcement.id) }}" id="announcementForm">
+        <div class="form-group">
+          <label for="message" class="form-label">
+            <span class="material-symbols-rounded">campaign</span>
+            Announcement Message *
+          </label>
+          <textarea 
+            class="form-input" 
+            id="message" 
+            name="message" 
+            rows="3" 
+            required 
+            placeholder="🎉 New service launched! Check out our Digital Marketing packages."
+            oninput="updatePreview()"
+          >{{ announcement.message }}</textarea>
+          <small class="form-help">You can use emojis to make your announcement more engaging.</small>
+        </div>
+
+        <div class="form-group">
+          <label for="type" class="form-label">
+            <span class="material-symbols-rounded">palette</span>
+            Announcement Type *
+          </label>
+          <select class="form-input" id="type" name="type" required onchange="updatePreview()">
+            <option value="info" {% if announcement.type == 'info' %}selected{% endif %}>Info (Blue/Purple)</option>
+            <option value="success" {% if announcement.type == 'success' %}selected{% endif %}>Success (Pink/Red)</option>
+            <option value="warning" {% if announcement.type == 'warning' %}selected{% endif %}>Warning (Orange/Peach)</option>
+            <option value="danger" {% if announcement.type == 'danger' %}selected{% endif %}>Danger (Red)</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="link" class="form-label">
+              <span class="material-symbols-rounded">link</span>
+              Link URL (Optional)
+            </label>
+            <input 
+              type="text" 
+              class="form-input" 
+              id="link" 
+              name="link" 
+              placeholder="/services/digital-marketing"
+              value="{{ announcement.link }}"
+              oninput="updatePreview()"
+            >
+            <small class="form-help">Leave empty if no link is needed.</small>
+          </div>
+
+          <div class="form-group">
+            <label for="link_text" class="form-label">
+              <span class="material-symbols-rounded">text_fields</span>
+              Link Text
+            </label>
+            <input 
+              type="text" 
+              class="form-input" 
+              id="link_text" 
+              name="link_text" 
+              placeholder="Learn More"
+              value="{{ announcement.link_text }}"
+              oninput="updatePreview()"
+            >
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="display_order" class="form-label">
+              <span class="material-symbols-rounded">sort</span>
+              Display Order
+            </label>
+            <input 
+              type="number" 
+              class="form-input" 
+              id="display_order" 
+              name="display_order" 
+              value="{{ announcement.display_order }}" 
+              min="1" 
+              max="999"
+            >
+            <small class="form-help">Lower numbers appear first.</small>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">
+              <span class="material-symbols-rounded">visibility</span>
+              Status
+            </label>
+            <div class="toggle-switch">
+              <input 
+                type="checkbox" 
+                id="is_active" 
+                name="is_active" 
+                class="toggle-input"
+                {% if announcement.is_active %}checked{% endif %}
+              >
+              <label for="is_active" class="toggle-label">
+                <span class="toggle-text">Active (Show on website)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <a href="{{ url_for('admin_announcements') }}" class="btn btn-secondary">
+            <span class="material-symbols-rounded icon">close</span>
+            <span>Cancel</span>
+          </a>
+          <button type="submit" class="btn btn-primary">
+            <span class="material-symbols-rounded icon">save</span>
+            <span>Update Announcement</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Preview Sidebar -->
+    <div class="preview-sidebar">
+      <div class="preview-card">
+        <div class="preview-header">
+          <span class="material-symbols-rounded">visibility</span>
+          <h3>Preview</h3>
+        </div>
+        <div class="preview-body">
+          <div id="preview-banner" class="announcement-preview announcement-info">
+            <div class="preview-content">
+              <span id="preview-message">{{ announcement.message }}</span>
+              <a href="#" id="preview-link" class="preview-link" style="{% if not announcement.link %}display: none;{% endif %}">
+                <span id="preview-link-text">{{ announcement.link_text }}</span> →
+              </a>
+            </div>
+          </div>
+          <small class="preview-note">
+            <span class="material-symbols-rounded">info</span>
+            This is how your announcement will look on the website.
+          </small>
+        </div>
+      </div>
+
+      <div class="tips-card">
+        <div class="tips-header">
+          <span class="material-symbols-rounded">lightbulb</span>
+          <h3>Tips</h3>
+        </div>
+        <ul class="tips-list">
+          <li>Keep messages short and clear</li>
+          <li>Use emojis for visual appeal</li>
+          <li>Set priority with display order</li>
+          <li>Test different announcement types</li>
+          <li>Update regularly for engagement</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.form-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  gap: 30px;
+}
+
+.form-card {
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-color, #333);
+  font-size: 14px;
+}
+
+.form-label .material-symbols-rounded {
+  font-size: 20px;
+  color: #667eea;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s;
+  background: var(--input-bg, #fff);
+  color: var(--text-color, #333);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.form-help {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.toggle-input {
+  width: 50px;
+  height: 26px;
+  position: relative;
+  appearance: none;
+  background: #ccc;
+  border-radius: 26px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.toggle-input:checked {
+  background: #667eea;
+}
+
+.toggle-input::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: white;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.3s;
+}
+
+.toggle-input:checked::before {
+  transform: translateX(24px);
+}
+
+.toggle-label {
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.toggle-text {
+  font-size: 14px;
+  color: var(--text-color, #333);
+}
+
+.form-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+}
+
+/* Preview Sidebar */
+.preview-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.preview-card, .tips-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.preview-header, .tips-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.preview-header .material-symbols-rounded,
+.tips-header .material-symbols-rounded {
+  font-size: 24px;
+}
+
+.preview-header h3, .tips-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.preview-body {
+  padding: 20px;
+}
+
+.announcement-preview {
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.announcement-info {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.announcement-success {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.announcement-warning {
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  color: #333;
+}
+
+.announcement-danger {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+}
+
+.preview-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+#preview-message {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.preview-link {
+  color: inherit;
+  text-decoration: underline;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.preview-note {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.preview-note .material-symbols-rounded {
+  font-size: 16px;
+}
+
+.tips-list {
+  list-style: none;
+  padding: 20px;
+  margin: 0;
+}
+
+.tips-list li {
+  padding: 10px 0;
+  padding-left: 24px;
+  position: relative;
+  font-size: 14px;
+  color: var(--text-color, #333);
+}
+
+.tips-list li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: #667eea;
+  font-weight: bold;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .preview-sidebar {
+    order: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style>
+
+<script>
+function updatePreview() {
+  const message = document.getElementById('message').value;
+  const type = document.getElementById('type').value;
+  const link = document.getElementById('link').value;
+  const linkText = document.getElementById('link_text').value || 'Learn More';
+  
+  // Update message
+  document.getElementById('preview-message').textContent = message || 'Your announcement will appear here...';
+  
+  // Update link
+  const previewLink = document.getElementById('preview-link');
+  if (link) {
+    previewLink.style.display = 'inline';
+    document.getElementById('preview-link-text').textContent = linkText;
+  } else {
+    previewLink.style.display = 'none';
+  }
+  
+  // Update type/color
+  const previewBanner = document.getElementById('preview-banner');
+  previewBanner.className = `announcement-preview announcement-${type}`;
+}
+
+// Initialize preview on page load
+document.addEventListener('DOMContentLoaded', updatePreview);
+</script>
+{% endblock %}

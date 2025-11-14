@@ -1,0 +1,147 @@
+{% extends "base.html" %} {% block title %}Our Services - Shramic Community{%
+endblock %} {% block header_class %}active{% endblock %} {% block extra_css %}
+<style>
+  .page-hero {
+    padding-top: 150px;
+    padding-bottom: 0;
+  }
+
+  .page-intro {
+    text-align: center;
+    max-width: 60ch;
+    margin: -20px auto 0;
+    color: var(--purple-navy);
+  }
+
+  .service-list {
+    display: grid;
+    gap: 30px;
+  }
+
+  .service-card {
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius-12);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition-2);
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px hsla(220, 63%, 33%, 0.15);
+  }
+
+  .service-card .card-icon {
+    background-image: url("{{ url_for('static', filename='images/service-banner-pattern.png') }}");
+    background-repeat: no-repeat;
+    background-size: contain;
+    aspect-ratio: 1 / 1;
+    max-width: 165px;
+    display: grid;
+    place-content: center;
+    margin-inline: auto;
+    transition: var(--transition-1);
+  }
+
+  .service-card .card-icon ion-icon {
+    font-size: 5rem;
+    color: var(--winter-sky);
+    --ionicon-stroke-width: 20px;
+    transition: var(--transition-1);
+  }
+
+  .service-card .title {
+    text-align: center;
+    margin-block-end: 15px;
+    color: var(--st-patricks-blue);
+    font-size: var(--fs-4);
+    font-weight: var(--fw-700);
+  }
+
+  .service-card .text {
+    text-align: center;
+    margin-block-end: 20px;
+    font-size: var(--fs-8);
+    flex-grow: 1;
+  }
+
+  .service-card .card-btn {
+    margin-top: auto;
+    margin-inline: auto;
+    padding: 15px;
+    border: 1px solid var(--winter-sky);
+    border-radius: 50%;
+    color: var(--winter-sky);
+    transition: var(--transition-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .service-card:hover .card-btn {
+    color: var(--white);
+    background-color: var(--winter-sky);
+  }
+
+  @media (min-width: 768px) {
+    .service-list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .service-list {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Page Hero Section -->
+<section class="section page-hero">
+  <div class="container">
+    <h1 class="h2 section-title underline">Our Services</h1>
+    <p class="page-intro">
+      Explore our comprehensive suite of services designed to elevate your brand
+      and digital presence.
+    </p>
+  </div>
+</section>
+
+<!-- Services List Section -->
+<section class="section service">
+  <div class="container">
+    <ul class="service-list">
+      {% for service in services %}
+      <li>
+        <a
+          href="{{ url_for('services', service_name=service.title.lower().replace(' ', '-').replace('&', '')) }}"
+          class="service-card"
+        >
+          <div class="card-icon">
+            <ion-icon name="{{ service.icon }}"></ion-icon>
+          </div>
+
+          <h3 class="h3 title">{{ service.title }}</h3>
+
+          <p class="text">{{ service.description }}</p>
+
+          <span class="card-btn" aria-label="Show More">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </span>
+        </a>
+      </li>
+      {% else %}
+      <li>
+        <p style="text-align: center; grid-column: 1 / -1">
+          No services available at the moment.
+        </p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

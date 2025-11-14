@@ -1,0 +1,47 @@
+{% extends 'admin/layout.html' %} {% block title %}Manage Services | Admin
+Panel{% endblock %} {% block content %}
+<div class="section-title-wrapper">
+  <h2 class="h2 section-title">Manage Services</h2>
+  <a href="{{ url_for('admin_add_service') }}" class="btn btn-primary">
+    <span class="material-symbols-rounded icon">add</span>
+    <span>Add New Service</span>
+  </a>
+</div>
+
+<div class="table-container">
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Icon</th>
+        <th>Title</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for service in services %}
+      <tr>
+        <td data-label="ID">{{ service.id }}</td>
+        <td data-label="Icon">{{ service.icon }}</td>
+        <td data-label="Title">{{ service.title }}</td>
+        <td data-label="Actions" class="table-actions">
+          <a href="{{ url_for('admin_edit_service', service_id=service.id) }}"
+            >Edit</a
+          >
+          <a
+            href="{{ url_for('admin_delete_service', service_id=service.id) }}"
+            class="delete"
+            onclick="confirmDelete(event)"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="4">No services found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

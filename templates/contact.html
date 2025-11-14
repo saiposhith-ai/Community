@@ -1,0 +1,242 @@
+{% extends "base.html" %} {% block title %}Contact Us - Shramic Community{%
+endblock %} {% block header_class %}active{% endblock %} {% block extra_css %}
+<style>
+  /* Page Hero Section */
+  .page-hero {
+    padding-top: 150px;
+    padding-bottom: 0;
+  }
+
+  .page-intro {
+    text-align: center;
+    max-width: 60ch;
+    margin: -20px auto 0;
+    color: var(--purple-navy);
+  }
+
+  /* Contact Form Styles */
+  .contact-form {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .contact-form .form-group {
+    margin-bottom: 20px;
+  }
+
+  .contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: var(--fw-600);
+    color: var(--st-patricks-blue);
+    font-size: var(--fs-8);
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--platinum);
+    border-radius: var(--radius-4);
+    font-size: 1.6rem;
+    font-family: inherit;
+    transition: var(--transition-1);
+  }
+
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: none;
+    border-color: var(--winter-sky);
+    box-shadow: 0 0 0 3px hsla(335, 87%, 53%, 0.1);
+  }
+
+  .contact-form textarea {
+    min-height: 150px;
+    resize: vertical;
+  }
+
+  .contact-form .btn {
+    margin-top: 10px;
+  }
+
+  /* Contact Info Section */
+  .contact-info {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 80px 0;
+  }
+
+  .contact-info .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .info-grid {
+    display: grid;
+    gap: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .info-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-12);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition-2);
+  }
+
+  .info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .info-card .icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--winter-sky), var(--rajah));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .info-card .icon ion-icon {
+    font-size: 3.5rem;
+    color: var(--white);
+    --ionicon-stroke-width: 30px;
+  }
+
+  .info-card h3 {
+    font-size: var(--fs-5);
+    color: var(--st-patricks-blue);
+    margin-bottom: 15px;
+    font-weight: var(--fw-600);
+  }
+
+  .info-card p,
+  .info-card a {
+    font-size: var(--fs-8);
+    color: var(--purple-navy);
+    line-height: 1.6;
+  }
+
+  .info-card a {
+    display: block;
+    margin-top: 5px;
+    transition: var(--transition-1);
+  }
+
+  .info-card a:hover {
+    color: var(--winter-sky);
+  }
+
+  @media (min-width: 768px) {
+    .info-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Page Hero Section -->
+<section class="section page-hero">
+  <div class="container">
+    <h1 class="h2 section-title underline">Contact Us</h1>
+    <p class="page-intro">
+      We'd love to hear from you! Please fill out the form below, and we'll get
+      back to you as soon as possible.
+    </p>
+  </div>
+</section>
+
+<!-- Contact Form Section -->
+<section class="section contact">
+  <div class="container">
+    <form action="{{ url_for('contact') }}" method="POST" class="contact-form">
+      <div class="form-group">
+        <label for="name">Your Name *</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          placeholder="Enter your full name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Your Email *</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="Enter your email address"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Subject *</label>
+        <input
+          type="text"
+          id="subject"
+          name="subject"
+          required
+          placeholder="What is this about?"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message *</label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          placeholder="Tell us more about your inquiry..."
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn">
+        <ion-icon name="send-outline"></ion-icon>
+        <span>Send Message</span>
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- Contact Info Section -->
+<section class="section contact-info">
+  <div class="container">
+    <h2 class="h2 section-title underline">Get In Touch</h2>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="icon">
+          <ion-icon name="call-outline"></ion-icon>
+        </div>
+        <h3>Phone</h3>
+        <a href="tel:+2484214313">+248-421-4313</a>
+        <a href="tel:+2486871365">+248-687-1365</a>
+      </div>
+
+      <div class="info-card">
+        <div class="icon">
+          <ion-icon name="mail-outline"></ion-icon>
+        </div>
+        <h3>Email</h3>
+        <a href="mailto:sharmikconnect@gmail.com">sharmikconnect@gmail.com</a>
+        <a href="mailto:info@shramiccommunity.com">info@shramiccommunity.com</a>
+      </div>
+
+      <div class="info-card">
+        <div class="icon">
+          <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <h3>Location</h3>
+        <p>Bengaluru, Karnataka, India</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,541 @@
+{% extends "base.html" %} {% block title %}{{ service.title }} - Shramic
+Community{% endblock %} {% block header_class %}active{% endblock %} {% block
+extra_css %}
+<style>
+  /* Hero Section */
+  .service-hero {
+    padding-top: 150px;
+    padding-bottom: 80px;
+    background: linear-gradient(
+      135deg,
+      var(--royal-blue-dark) 0%,
+      var(--ksu-purple) 100%
+    );
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("{{ url_for('static', filename='images/hero-bg.png') }}")
+      no-repeat center;
+    background-size: cover;
+    opacity: 0.1;
+  }
+
+  .service-hero .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .service-hero-content {
+    text-align: center;
+    color: var(--white);
+  }
+
+  .service-hero .breadcrumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-size: var(--fs-8);
+    opacity: 0.9;
+  }
+
+  .service-hero .breadcrumb a {
+    color: var(--white);
+    transition: var(--transition-1);
+  }
+
+  .service-hero .breadcrumb a:hover {
+    color: var(--chrome-yellow);
+  }
+
+  .service-hero .breadcrumb-separator {
+    color: var(--white);
+  }
+
+  .service-hero-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 30px;
+    background: rgb(228 119 104);
+    backdrop-filter: blur(10px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .service-hero-icon ion-icon {
+    font-size: 6rem;
+    color: var(--white);
+    --ionicon-stroke-width: 25px;
+  }
+
+  .service-hero h1 {
+    font-size: var(--fs-1);
+    font-weight: var(--fw-700);
+    margin-bottom: 20px;
+    color: hsl(236.8deg 52.45% 28.04%);
+  }
+
+  .service-hero .subtitle {
+    font-size: var(--fs-6);
+    max-width: 60ch;
+    margin: 0 auto;
+    opacity: 0.95;
+    line-height: 1.6;
+    color: #21256d;
+  }
+
+  /* Service Overview */
+  .service-overview {
+    padding: 80px 0;
+  }
+
+  .overview-content {
+    display: grid;
+    gap: 50px;
+    align-items: center;
+  }
+
+  .overview-text h2 {
+    font-size: var(--fs-2);
+    color: var(--st-patricks-blue);
+    margin-bottom: 25px;
+    font-weight: var(--fw-700);
+  }
+
+  .overview-text p {
+    font-size: var(--fs-7);
+    line-height: 1.8;
+    color: var(--purple-navy);
+    margin-bottom: 20px;
+  }
+
+  .overview-image {
+    position: relative;
+    border-radius: var(--radius-12);
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+
+  .overview-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .key-features {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+    padding: 80px 0;
+  }
+
+  .key-features .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .features-grid {
+    display: grid;
+    gap: 30px;
+  }
+
+  .feature-item {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-12);
+    box-shadow: var(--shadow);
+    transition: var(--transition-2);
+    border-left: 4px solid var(--winter-sky);
+  }
+
+  .feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .feature-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--winter-sky), var(--rajah));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .feature-icon ion-icon {
+    font-size: 3rem;
+    color: var(--white);
+    --ionicon-stroke-width: 30px;
+  }
+
+  .feature-item h3 {
+    font-size: var(--fs-5);
+    color: var(--st-patricks-blue);
+    margin-bottom: 15px;
+    font-weight: var(--fw-600);
+  }
+
+  .feature-item p {
+    font-size: var(--fs-8);
+    color: var(--purple-navy);
+    line-height: 1.7;
+  }
+
+  /* Process Section */
+  .service-process {
+    padding: 80px 0;
+  }
+
+  .service-process .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .process-timeline {
+    position: relative;
+    padding-left: 0;
+  }
+
+  .process-step {
+    display: grid;
+    gap: 30px;
+    margin-bottom: 50px;
+    position: relative;
+  }
+
+  .step-number {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--winter-sky), var(--rajah));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--fs-3);
+    font-weight: var(--fw-700);
+    color: var(--white);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    margin: 0 auto 20px;
+  }
+
+  .step-content h3 {
+    font-size: var(--fs-4);
+    color: var(--st-patricks-blue);
+    margin-bottom: 15px;
+    font-weight: var(--fw-600);
+  }
+
+  .step-content p {
+    font-size: var(--fs-8);
+    color: var(--purple-navy);
+    line-height: 1.7;
+  }
+
+  /* Benefits Section */
+  .service-benefits {
+    background: linear-gradient(
+      135deg,
+      var(--royal-blue-dark) 0%,
+      var(--ksu-purple) 100%
+    );
+    color: var(--white);
+    padding: 80px 0;
+  }
+
+  .service-benefits .section-title {
+    text-align: center;
+    color: var(--white);
+    margin-bottom: 60px;
+  }
+
+  .benefits-list {
+    display: grid;
+    gap: 25px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: var(--radius-12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: var(--transition-2);
+  }
+
+  .benefit-item:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(10px);
+  }
+
+  .benefit-icon {
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    background: var(--chrome-yellow);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .benefit-icon ion-icon {
+    font-size: 2.5rem;
+    color: var(--royal-blue-dark);
+    --ionicon-stroke-width: 35px;
+  }
+
+  .benefit-text h4 {
+    font-size: var(--fs-6);
+    margin-bottom: 10px;
+    font-weight: var(--fw-600);
+  }
+
+  .benefit-text p {
+    font-size: var(--fs-8);
+    opacity: 0.9;
+    line-height: 1.6;
+  }
+
+  /* CTA Section */
+  .service-cta {
+    padding: 80px 0;
+    text-align: center;
+  }
+
+  .cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .cta-content h2 {
+    font-size: var(--fs-2);
+    color: var(--st-patricks-blue);
+    margin-bottom: 20px;
+    font-weight: var(--fw-700);
+  }
+
+  .cta-content p {
+    font-size: var(--fs-6);
+    color: var(--purple-navy);
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  .cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid var(--winter-sky);
+    color: var(--winter-sky);
+  }
+
+  .btn-secondary:hover {
+    background: var(--winter-sky);
+    color: var(--white);
+  }
+
+  /* Related Services */
+  .related-services {
+    background: #f8f9fa;
+    padding: 80px 0;
+  }
+
+  .related-services .section-title {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .related-grid {
+    display: grid;
+    gap: 30px;
+  }
+
+  .related-card {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-12);
+    box-shadow: var(--shadow);
+    transition: var(--transition-2);
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .related-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .related-card .card-icon {
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, var(--winter-sky), var(--rajah));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .related-card .card-icon ion-icon {
+    font-size: 3.5rem;
+    color: var(--white);
+    --ionicon-stroke-width: 30px;
+  }
+
+  .related-card h3 {
+    font-size: var(--fs-5);
+    color: var(--st-patricks-blue);
+    margin-bottom: 15px;
+    font-weight: var(--fw-600);
+  }
+
+  .related-card p {
+    font-size: var(--fs-8);
+    color: var(--purple-navy);
+    line-height: 1.6;
+    flex-grow: 1;
+  }
+
+  .related-card .card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--winter-sky);
+    font-weight: var(--fw-500);
+    margin-top: 15px;
+    transition: var(--transition-1);
+  }
+
+  .related-card:hover .card-link {
+    gap: 10px;
+  }
+
+  /* Responsive */
+  @media (min-width: 768px) {
+    .overview-content {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-step {
+      grid-template-columns: 80px 1fr;
+      text-align: left;
+    }
+
+    .step-number {
+      margin: 0;
+    }
+
+    .related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 992px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .related-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<!-- Service Hero -->
+<section class="service-hero">
+  <div class="container">
+    <div class="service-hero-content">
+      <div class="breadcrumb">
+        <a href="{{ url_for('index') }}">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="{{ url_for('services') }}">Services</a>
+        <span class="breadcrumb-separator">/</span>
+        <span>{{ service.title }}</span>
+      </div>
+
+      <div class="service-hero-icon">
+        <ion-icon name="{{ service.icon }}"></ion-icon>
+      </div>
+
+      <h1>{{ service.title }}</h1>
+      <p class="subtitle">{{ service.description }}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Service Overview -->
+<section class="service-overview">
+  <div class="container">
+    <div class="overview-content">
+      <div class="overview-text">
+        <h2>What We Offer</h2>
+        <p>{{ service.description }}</p>
+        <p>
+          Shramic Community is dedicated to providing top-notch {{ service.title
+          }} services that cater to your unique business needs.
+        </p>
+        <p>
+          Our team of experts leverages the latest technologies and industry
+          best practices to deliver solutions that drive growth and success.
+        </p>
+      </div>
+
+      <div class="overview-image">
+        <img
+          src="{{ url_for('static', filename='images/service-detail.jpg') }}"
+          alt="{{ service.title }}"
+          onerror="this.src='{{ url_for('static', filename='images/about-banner.jpg') }}'"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="service-cta">
+  <div class="container">
+    <div class="cta-content">
+      <h2>Ready to Get Started?</h2>
+      <p>
+        Let's discuss how our {{ service.title }} can help transform your
+        business. Contact us today for a free consultation!
+      </p>
+      <div class="cta-buttons">
+        <a href="{{ url_for('contact') }}" class="btn">
+          Contact Us
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </a>
+        <a href="{{ url_for('services') }}" class="btn btn-secondary">
+          View All Services
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

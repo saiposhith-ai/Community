@@ -1,0 +1,56 @@
+{% extends 'admin/layout.html' %} {% block title %}Manage Contacts | Admin
+Panel{% endblock %} {% block content %}
+<div class="section-title-wrapper">
+  <h2 class="h2 section-title">Contact Messages</h2>
+</div>
+
+<div class="table-container">
+  <table class="content-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for contact in contacts|sort(attribute='date', reverse=True) %}
+      <tr>
+        <td data-label="Name">{{ contact.name }}</td>
+        <td data-label="Email">{{ contact.email }}</td>
+        <td data-label="Subject">{{ contact.subject }}</td>
+        <td data-label="Date">{{ contact.date }}</td>
+        <td data-label="Status">
+          <div
+            class="card-badge {% if contact.status == 'new' %}blue{% else %}green{% endif %}"
+          >
+            {{ contact.status|capitalize }}
+          </div>
+        </td>
+        <td data-label="Actions" class="table-actions">
+          {% if contact.status == 'new' %}
+          <a
+            href="{{ url_for('admin_mark_contact_read', contact_id=contact.id) }}"
+            >Mark as Read</a
+          >
+          {% endif %}
+          <a
+            href="{{ url_for('admin_delete_contact', contact_id=contact.id) }}"
+            class="delete"
+            onclick="confirmDelete(event)"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="6">No contacts found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -1,0 +1,2047 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Shramic Community</title>
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='favicon.svg') }}"
+      type="image/svg+xml"
+    />
+    <style>
+      :root {
+        --st-patricks-blue: hsl(236, 57%, 28%);
+        --amaranth-purple: hsl(335, 88%, 38%);
+        --royal-blue-dark: hsl(231, 68%, 21%);
+        --chrome-yellow: hsl(39, 100%, 52%);
+        --space-cadet-1: hsl(230, 41%, 25%);
+        --space-cadet-2: hsl(230, 59%, 16%);
+        --winter-sky_50: hsla(335, 87%, 53%, 0.5);
+        --purple-navy: hsl(236, 26%, 43%);
+        --ksu-purple: hsl(275, 54%, 33%);
+        --winter-sky: hsl(335, 87%, 53%);
+        --razzmatazz: hsl(335, 87%, 51%);
+        --platinum: hsl(0, 0%, 90%);
+        --black_70: hsla(0, 0%, 0%, 0.7);
+        --rajah: hsl(29, 99%, 67%);
+        --white: hsl(0, 0%, 100%);
+
+        --gradient-1: linear-gradient(
+          90deg,
+          var(--royal-blue-dark) 0,
+          var(--ksu-purple) 51%,
+          var(--royal-blue-dark)
+        );
+        --gradient-2: linear-gradient(90deg, var(--razzmatazz), var(--rajah));
+        --ff-source-sans-pro: "Source Sans Pro", sans-serif;
+        --ff-poppins: "Poppins", sans-serif;
+        --fs-1: 4.2rem;
+        --fs-2: 3.8rem;
+        --fs-3: 3.2rem;
+        --fs-4: 2.5rem;
+        --fs-5: 2.4rem;
+        --fs-6: 2rem;
+        --fs-7: 1.8rem;
+        --fs-8: 1.5rem;
+        --fw-500: 500;
+        --fw-600: 600;
+        --fw-700: 700;
+        --radius-4: 4px;
+        --radius-12: 12px;
+        --section-padding: 60px;
+        --transition-1: 0.15s ease;
+        --transition-2: 0.35s ease;
+        --cubic-in: cubic-bezier(0.51, 0.03, 0.64, 0.28);
+        --cubic-out: cubic-bezier(0.33, 0.85, 0.56, 1.02);
+        --shadow: 0 5px 20px 1px hsla(220, 63%, 33%, 0.1);
+      }
+
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      * {
+        touch-action: manipulation;
+      }
+
+      /* Prevent double-tap zoom on mobile */
+      body {
+        touch-action: pan-x pan-y;
+      }
+
+      /* Desktop: Limit zoom to 75% */
+      @media (min-width: 768px) {
+        html {
+          min-zoom: 0.75;
+          max-zoom: 0.75;
+        }
+
+        body {
+          zoom: 1;
+          -moz-transform: scale(1);
+          -moz-transform-origin: 0 0;
+        }
+      }
+
+      /* Mobile: Completely disable zoom */
+      @media (max-width: 767px) {
+        html {
+          -ms-touch-action: manipulation;
+          touch-action: manipulation;
+        }
+
+        input,
+        textarea,
+        select {
+          font-size: 16px !important; /* Prevents iOS zoom on focus */
+        }
+      }
+
+      li {
+        list-style: none;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      a,
+      img,
+      span,
+      input,
+      button,
+      ion-icon {
+        display: block;
+      }
+
+      button,
+      input {
+        background: none;
+        border: none;
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      input {
+        width: 100%;
+      }
+
+      ion-icon {
+        pointer-events: none;
+      }
+
+      img {
+        height: auto;
+      }
+
+      address {
+        font-style: normal;
+      }
+
+      html {
+        font-family: var(--ff-poppins);
+        font-size: 10px;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--white);
+        color: var(--purple-navy);
+        font-size: 1.6rem;
+      }
+
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: hsl(0, 0%, 95%);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: hsl(0, 0%, 80%);
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: hsl(0, 0%, 70%);
+      }
+
+      .container {
+        padding-inline: 15px;
+      }
+
+      .h2,
+      .h3 {
+        font-family: var(--ff-source-sans-pro);
+      }
+
+      .btn {
+        background-image: var(--gradient-2);
+        background-size: 200%;
+        color: var(--white);
+        padding: 12px 35px;
+        font-size: var(--fs-8);
+        font-weight: var(--fw-500);
+        border-radius: 0 25px;
+        transition: var(--transition-2);
+      }
+
+      .btn:is(:hover, :focus) {
+        background-position: right;
+      }
+
+      .w-100 {
+        width: 100%;
+      }
+
+      .banner-animation {
+        animation: waveAnim 2s linear infinite alternate;
+      }
+
+      @keyframes waveAnim {
+        0% {
+          transform: translate(0, 0) rotate(0);
+        }
+        100% {
+          transform: translate(2px, 2px) rotate(1deg);
+        }
+      }
+
+      .section {
+        padding-block: var(--section-padding);
+      }
+
+      .section-title {
+        color: var(--st-patricks-blue);
+        font-size: var(--fs-3);
+        margin-block-end: 60px;
+        max-width: max-content;
+        margin-inline: auto;
+      }
+
+      .underline {
+        position: relative;
+      }
+
+      .underline::before {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 70%;
+        height: 6px;
+        background-image: var(--gradient-2);
+        border-radius: 10px;
+      }
+
+      :is(.service-card, .features-card) .title {
+        color: var(--st-patricks-blue);
+        font-size: var(--fs-4);
+        font-weight: var(--fw-700);
+      }
+
+      :is(.service-card, .features-card, .blog-card) .text {
+        font-size: var(--fs-8);
+      }
+
+      .img-cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .header .btn {
+        display: none;
+      }
+
+      .header {
+        --color: var(--white);
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding-block: 14px;
+        z-index: 4;
+        transition: var(--transition-1);
+      }
+
+      .header.active {
+        --color: var(--st-patricks-blue);
+
+        position: fixed;
+        background-color: var(--white);
+        box-shadow: 0 2px 30px hsla(0, 0%, 0%, 0.1);
+      }
+
+      .header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .logo {
+        color: var(--color);
+        font-family: var(--ff-source-sans-pro);
+        font-size: var(--fs-3);
+      }
+
+      .nav-open-btn {
+        color: var(--color);
+        font-size: 32px;
+        padding: 4px;
+      }
+
+      .navbar {
+        background-color: var(--white);
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 100%;
+        max-width: 280px;
+        min-height: 100%;
+        padding: 20px;
+        visibility: hidden;
+        z-index: 2;
+        transition: 0.25s var(--cubic-in);
+      }
+
+      .navbar.active {
+        transform: translateX(280px);
+        visibility: visible;
+        transition: 0.5s var(--cubic-out);
+      }
+
+      .navbar-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-block: 10px 30px;
+      }
+
+      .navbar-top .logo {
+        color: var(--st-patricks-blue);
+        font-size: 4.2rem;
+        font-weight: var(--fw-700);
+      }
+
+      .nav-close-btn {
+        color: var(--space-cadet-1);
+        font-size: 2.8rem;
+        padding: 4px;
+      }
+
+      .navbar-item:not(:last-child) {
+        border-bottom: 1px solid var(--platinum);
+      }
+
+      .navbar-link {
+        color: var(--space-cadet-1);
+        font-size: var(--fs-8);
+        font-weight: var(--fw-600);
+        padding-block: 12px;
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background-color: var(--black_70);
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+        transition: var(--transition-2);
+      }
+
+      .overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .hero {
+        background-image: url("{{ url_for('static', filename='images/hero-bg-bottom.png') }}"),
+          url("{{ url_for('static', filename='images/hero-bg.png') }}"),
+          var(--gradient-1);
+        background-repeat: no-repeat, no-repeat, no-repeat;
+        background-position: -280px bottom, center, center;
+        background-size: auto, cover, auto;
+        padding-block-start: 120px;
+        padding-block-end: var(--section-padding);
+      }
+
+      .hero-content {
+        margin-block-end: 50px;
+      }
+
+      .hero-subtitle {
+        color: var(--chrome-yellow);
+        font-family: var(--ff-source-sans-pro);
+        font-size: var(--fs-7);
+        margin-block-end: 15px;
+      }
+
+      .hero-title {
+        color: var(--white);
+        font-size: var(--fs-1);
+        margin-block-end: 20px;
+      }
+
+      .hero-text {
+        color: var(--white);
+        font-size: var(--fs-8);
+        margin-block-end: 30px;
+      }
+
+      .about-banner {
+        margin-block-end: 30px;
+      }
+
+      .about .section-title {
+        margin-inline: 0;
+      }
+
+      .about .underline::before {
+        left: 0;
+        transform: translateX(0);
+      }
+
+      .about-text {
+        font-size: var(--fs-8);
+        margin-block-end: 20px;
+      }
+
+      .stats-list {
+        display: grid;
+        gap: 30px;
+      }
+
+      .stats-card {
+        text-align: center;
+        padding: 15px;
+        box-shadow: var(--shadow);
+        border-radius: var(--radius-12);
+      }
+
+      .stats-title {
+        color: var(--st-patricks-blue);
+        font-size: var(--fs-2);
+        font-weight: var(--fw-700);
+      }
+
+      .stats-text {
+        font-size: var(--fs-8);
+      }
+
+      .service-list {
+        display: grid;
+        gap: 30px;
+      }
+
+      .service-card {
+        padding: 30px;
+        box-shadow: var(--shadow);
+        border-radius: var(--radius-12);
+      }
+
+      .service-card .card-icon {
+        background-image: url(/static/images/service-banner-pattern.png);
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-color: hsla(335, 87%, 53%, 0.12);
+        aspect-ratio: 1 / 1;
+        max-width: 165px;
+        display: grid;
+        place-content: center;
+        margin-inline: auto;
+        border-radius: 50%;
+        transition: var(--transition-1);
+      }
+
+      .service-card:hover .card-icon {
+        background-color: var(--winter-sky);
+      }
+
+      .service-card .card-icon ion-icon {
+        font-size: 5rem;
+        color: var(--winter-sky);
+        --ionicon-stroke-width: 20px;
+        transition: var(--transition-1);
+      }
+
+      .service-card:hover .card-icon ion-icon {
+        color: var(--white);
+      }
+
+      .service-card .title {
+        text-align: center;
+        margin-block-end: 15px;
+      }
+
+      .service-card .text {
+        text-align: center;
+        margin-block-end: 20px;
+      }
+
+      .service-card .card-btn {
+        margin-inline: auto;
+        padding: 12px;
+        border: 1px solid var(--winter-sky);
+        color: var(--winter-sky);
+        transition: var(--transition-1);
+      }
+
+      .service-card .card-btn:is(:hover, :focus) {
+        color: var(--white);
+        background-color: #2c2a2a0c;
+      }
+
+      .features-list > li:first-child {
+        margin-block-end: 30px;
+      }
+
+      .features-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .features-card .icon {
+        background-image: var(--gradient-1);
+        background-size: 200%;
+        color: var(--white);
+        min-width: max-content;
+        max-width: max-content;
+        font-size: 36px;
+        padding: 22px;
+        border-radius: 50%;
+      }
+
+      .features-card .icon ion-icon {
+        --ionicon-stroke-width: 20px;
+      }
+
+      .features-card .title {
+        margin-block-end: 10px;
+      }
+
+      .features-banner {
+        margin-block: 40px;
+      }
+
+      .features-banner > img {
+        max-width: max-content;
+        margin-inline: auto;
+      }
+
+      .blog {
+        padding-block-end: 120px;
+      }
+
+      .blog-list {
+        display: grid;
+        gap: 30px;
+      }
+
+      .blog-card {
+        padding: 20px;
+        box-shadow: var(--shadow);
+        border-radius: var(--radius-12);
+      }
+
+      .blog-card .banner {
+        border-radius: var(--radius-12);
+        overflow: hidden;
+        margin-block-end: 15px;
+      }
+
+      .blog-card .banner img {
+        transition: var(--transition-2);
+      }
+
+      .blog-card .banner a:is(:hover, :focus) img {
+        transform: scale(1.1);
+      }
+
+      .blog-card .title {
+        color: var(--st-patricks-blue);
+        font-size: var(--fs-6);
+        line-height: 1.2;
+        margin-block-end: 15px;
+      }
+
+      .blog-card .title > a {
+        color: inherit;
+      }
+
+      .blog-card .title > a:is(:hover, :focus) {
+        color: var(--razzmatazz);
+      }
+
+      .blog-card .text {
+        margin-block-end: 15px;
+      }
+
+      .blog-card .meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        font-size: var(--fs-8);
+        color: var(--purple-navy);
+        font-weight: var(--fw-500);
+        padding-block-end: 10px;
+      }
+
+      .blog-card .meta ion-icon {
+        color: var(--winter-sky);
+        font-size: 22px;
+        --ionicon-stroke-width: 35px;
+      }
+
+      .publish-date,
+      .comment {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .comment {
+        color: inherit;
+        margin-inline-start: auto;
+      }
+
+      .footer {
+        font-size: var(--fs-8);
+      }
+
+      .footer a {
+        color: inherit;
+      }
+
+      .footer-top {
+        background-image: url("{{ url_for('static', filename='images/footer-bg.png') }}"),
+          var(--gradient-1);
+        background-repeat: no-repeat;
+        background-size: auto, 200%;
+        background-position: center, center;
+        color: var(--white);
+      }
+
+      .footer-brand {
+        margin-block-end: 30px;
+      }
+
+      .footer-brand .logo {
+        font-weight: var(--fw-700);
+        margin-block-end: 15px;
+      }
+
+      .footer-brand .text {
+        font-size: var(--fs-8);
+        margin-block-end: 20px;
+      }
+
+      .social-list {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .footer-top .social-link {
+        background-color: var(--white);
+        color: var(--winter-sky);
+        font-size: 18px;
+        padding: 8px;
+        border-radius: 50%;
+      }
+
+      .footer-top .social-link:is(:hover, :focus) {
+        background-image: var(--gradient-2);
+        color: var(--white);
+      }
+
+      .footer-list:not(:last-child) {
+        margin-block-end: 25px;
+      }
+
+      .footer-list-title {
+        font-family: var(--ff-source-sans-pro);
+        font-size: var(--fs-5);
+        font-weight: var(--fw-700);
+        margin-block-end: 15px;
+      }
+
+      .footer-link {
+        padding-block: 5px;
+      }
+
+      :is(.footer-link, .footer-item-link):not(address):is(:hover, :focus) {
+        text-decoration: underline;
+      }
+
+      .footer-item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        padding-block: 10px;
+      }
+
+      .footer-item-icon {
+        background-image: var(--gradient-2);
+        padding: 13px;
+        border-radius: 50%;
+      }
+
+      .footer-bottom {
+        background-color: var(--space-cadet-2);
+        padding: 20px;
+        text-align: center;
+        color: var(--white);
+      }
+
+      .copyright-link {
+        display: inline-block;
+        text-decoration: underline;
+      }
+
+      .copyright-link:is(:hover, :focus) {
+        text-decoration: none;
+      }
+
+      .go-top {
+        position: fixed;
+        bottom: 0;
+        right: 15px;
+        background-color: var(--winter-sky);
+        color: var(--white);
+        font-size: 2rem;
+        padding: 14px;
+        border-radius: var(--radius-4);
+        box-shadow: -3px 3px 15px var(--winter-sky_50);
+        z-index: 2;
+        visibility: hidden;
+        opacity: 0;
+        transition: var(--transition-1);
+      }
+
+      .go-top.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(-15px);
+      }
+
+      @media (min-width: 550px) {
+        .container {
+          max-width: 550px;
+          margin-inline: auto;
+        }
+
+        .section-title {
+          --fs-3: 3.6rem;
+        }
+
+        .header .btn {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+          margin-inline-start: auto;
+        }
+
+        .stats-list {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .blog-card {
+          display: grid;
+          grid-template-columns: 0.75fr 1fr;
+          gap: 20px;
+          padding: 30px;
+        }
+
+        .blog-card .banner {
+          margin-block-end: 0;
+        }
+
+        .blog-card .banner a {
+          height: 100%;
+        }
+
+        .footer-brand,
+        .footer-list:not(:last-child) {
+          margin-block-end: 0;
+        }
+
+        .footer-top .container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 30px 50px;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .container {
+          max-width: 720px;
+        }
+        .hero {
+          min-height: 600px;
+          display: grid;
+          place-items: center;
+        }
+
+        .hero-content {
+          margin-block-end: 0;
+        }
+
+        .hero .container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+          gap: 30px;
+        }
+
+        .service-list {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .features-list > li:first-child {
+          margin-block-end: 0;
+        }
+
+        .features-list {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 25px;
+        }
+
+        .footer-top .container {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      @media (min-width: 992px) {
+        :root {
+          --fs-1: 5.4rem;
+        }
+
+        .container {
+          max-width: 950px;
+        }
+
+        .header {
+          padding-block: 20px;
+        }
+
+        .overlay,
+        .nav-open-btn,
+        .navbar-top {
+          display: none;
+        }
+
+        .navbar,
+        .navbar.active {
+          all: unset;
+          margin-inline-start: auto;
+        }
+
+        .header .btn {
+          margin-inline-start: 0;
+        }
+
+        .navbar-list {
+          display: flex;
+          gap: 25px;
+        }
+
+        .navbar-item:not(:last-child) {
+          border-bottom: none;
+        }
+
+        .navbar-link {
+          color: var(--color);
+        }
+
+        .hero {
+          min-height: 700px;
+        }
+
+        .about .container {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 30px;
+        }
+
+        .service-list {
+          grid-template-columns: repeat(3, 1fr);
+        }
+
+        .features-list {
+          grid-template-columns: 1fr;
+        }
+
+        .features .container {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 30px;
+        }
+
+        .features .section-title {
+          grid-column: 1 / 4;
+        }
+
+        .features-banner {
+          margin-block: 0;
+          display: grid;
+          place-items: center;
+        }
+
+        .footer-top .container {
+          grid-template-columns: repeat(4, 1fr);
+        }
+
+        .footer-brand {
+          grid-column: 1 / 5;
+        }
+
+        .footer-brand .text {
+          max-width: 45ch;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .container {
+          max-width: 1200px;
+        }
+
+        .section-title {
+          --fs-3: 4.6rem;
+        }
+
+        .hero {
+          min-height: 800px;
+        }
+
+        .blog-list {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .blog-card {
+          height: 100%;
+        }
+
+        .blog-card .content {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .footer-top .container {
+          grid-template-columns: 1fr 0.5fr 0.7fr 0.5fr 1fr;
+        }
+
+        .footer-brand {
+          grid-column: auto;
+        }
+      }
+      .icon-text {
+        display: inline-flex;
+        gap: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        color: #dc3a75;
+        font-family: Arial, sans-serif;
+      }
+
+      .icon-text:hover {
+        color: #dc3a75;
+      }
+      .announcement-section {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        margin-bottom: 0;
+      }
+
+      .announcement-banner {
+        padding: 16px 0;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        animation: slideDown 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Add subtle pattern overlay */
+      .announcement-banner::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 50%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 50%,
+            rgba(255, 255, 255, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Gradient backgrounds with enhanced colors */
+      .announcement-info {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-bottom: 3px solid rgba(102, 126, 234, 0.3);
+      }
+
+      .announcement-success {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: white;
+        border-bottom: 3px solid rgba(245, 87, 108, 0.3);
+      }
+
+      .announcement-warning {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        color: #333;
+        border-bottom: 3px solid rgba(252, 182, 159, 0.4);
+      }
+
+      .announcement-danger {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+        color: white;
+        border-bottom: 3px solid rgba(238, 90, 111, 0.3);
+      }
+
+      .announcement-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        padding: 0 50px 0 20px;
+        position: relative;
+        z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .announcement-message {
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.5;
+        text-align: center;
+        flex: 1 1 auto;
+        min-width: 200px;
+        letter-spacing: 0.3px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Enhanced link styling */
+      .announcement-link {
+        color: inherit;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 6px 16px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .announcement-link:hover {
+        background: rgba(255, 255, 255, 0.35);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .announcement-link:active {
+        transform: translateY(0);
+      }
+
+      /* Enhanced close button */
+      .announcement-close {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        color: inherit;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 20px;
+        line-height: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .announcement-close:hover {
+        background: rgba(255, 255, 255, 0.4);
+        transform: translateY(-50%) scale(1.1) rotate(90deg);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .announcement-close:active {
+        transform: translateY(-50%) scale(0.95);
+      }
+
+      /* Smooth animations */
+      @keyframes slideDown {
+        0% {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        60% {
+          transform: translateY(5px);
+        }
+        100% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+          max-height: 200px;
+        }
+        100% {
+          transform: translateY(-100%);
+          opacity: 0;
+          max-height: 0;
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Add pulse animation for important announcements */
+      @keyframes pulse {
+        0%,
+        100% {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        50% {
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+      }
+
+      .announcement-danger {
+        animation: slideDown 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+          pulse 2s ease-in-out infinite;
+      }
+      /* Mobile devices (up to 767px) */
+      @media (max-width: 767px) {
+        .announcement-banner {
+          padding: 14px 0;
+        }
+
+        .announcement-content {
+          padding: 0 50px 0 12px;
+          gap: 12px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .announcement-message {
+          font-size: 13.5px;
+          text-align: left;
+          min-width: unset;
+          width: 100%;
+          line-height: 1.6;
+        }
+
+        .announcement-link {
+          font-size: 13px;
+          padding: 5px 14px;
+          align-self: flex-start;
+          margin-top: 4px;
+        }
+
+        .announcement-close {
+          right: 10px;
+          width: 28px;
+          height: 28px;
+          font-size: 18px;
+          top: 14px;
+          transform: translateY(0);
+        }
+
+        .announcement-close:hover {
+          transform: scale(1.1) rotate(90deg);
+        }
+      }
+
+      /* Tablets (768px to 991px) */
+      @media (min-width: 768px) and (max-width: 991px) {
+        .announcement-banner {
+          padding: 15px 0;
+        }
+
+        .announcement-content {
+          padding: 0 60px 0 20px;
+        }
+
+        .announcement-message {
+          font-size: 14px;
+        }
+
+        .announcement-link {
+          font-size: 13.5px;
+        }
+
+        .announcement-close {
+          right: 12px;
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      /* Large tablets and small desktops (992px to 1199px) */
+      @media (min-width: 992px) and (max-width: 1199px) {
+        .announcement-banner {
+          padding: 16px 0;
+        }
+
+        .announcement-content {
+          gap: 18px;
+        }
+
+        .announcement-message {
+          font-size: 15px;
+        }
+      }
+
+      /* Large desktops (1200px and above) */
+      @media (min-width: 1200px) {
+        .announcement-banner {
+          padding: 18px 0;
+        }
+
+        .announcement-content {
+          gap: 20px;
+        }
+
+        .announcement-message {
+          font-size: 16px;
+        }
+
+        .announcement-link {
+          font-size: 15px;
+          padding: 7px 18px;
+        }
+      }
+
+      /* Focus states for keyboard navigation */
+      .announcement-close:focus-visible,
+      .announcement-link:focus-visible {
+        outline: 3px solid rgba(255, 255, 255, 0.6);
+        outline-offset: 2px;
+      }
+
+      /* Reduce motion for users who prefer it */
+      @media (prefers-reduced-motion: reduce) {
+        .announcement-banner {
+          animation: fadeIn 0.3s ease-out;
+        }
+
+        .announcement-close:hover {
+          transform: translateY(-50%) scale(1.1);
+        }
+
+        .announcement-link:hover {
+          transform: none;
+        }
+
+        .announcement-danger {
+          animation: fadeIn 0.3s ease-out;
+        }
+      }
+
+      /* Dark mode support (if needed) */
+      @media (prefers-color-scheme: dark) {
+        .announcement-warning {
+          color: #1a1a1a;
+        }
+
+        .announcement-banner {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        .announcement-section {
+          display: none;
+        }
+      }
+    </style>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Source+Sans+Pro:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body id="top">
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %} {% if
+    messages %}
+    <div
+      class="flash-messages"
+      style="position: fixed; top: 20px; right: 20px; z-index: 1000"
+    >
+      {% for category, message in messages %}
+      <div
+        class="alert alert-{{ 'danger' if category == 'error' else category }}"
+        style="background: {% if category == 'success' %}#d4edda{% else %}#f8d7da{% endif %};
+                        color: {% if category == 'success' %}#155724{% else %}#721c24{% endif %};
+                        padding: 15px; margin-bottom: 10px; border-radius: 4px; max-width: 300px;"
+      >
+        {{ message }}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+
+    <!--
+    - #HEADER
+  -->
+
+    <header class="header" data-header>
+      <div class="container">
+        <div class="overlay" data-overlay></div>
+
+        <a href="{{ url_for('index') }}">
+          <h1 class="logo">Shramic Community</h1>
+        </a>
+
+        <nav class="navbar" data-navbar>
+          <div class="navbar-top">
+            <a href="{{ url_for('index') }}" class="logo">Shramic Community</a>
+
+            <button
+              class="nav-close-btn"
+              aria-label="Close Menu"
+              data-nav-close-btn
+            >
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+          </div>
+
+          <ul class="navbar-list">
+            <li class="navbar-item">
+              <a href="#home" class="navbar-link" data-navbar-link>Home</a>
+            </li>
+
+            <li class="navbar-item">
+              <a href="#about" class="navbar-link" data-navbar-link>About</a>
+            </li>
+
+            <li class="navbar-item">
+              <a
+                href="{{ url_for('services') }}"
+                class="navbar-link"
+                data-navbar-link
+                >Services</a
+              >
+            </li>
+
+            <li class="navbar-item">
+              <a href="#features" class="navbar-link" data-navbar-link
+                >Features</a
+              >
+            </li>
+
+            <li class="navbar-item">
+              <a
+                href="{{ url_for('blog') }}"
+                class="navbar-link"
+                data-navbar-link
+                >Blog</a
+              >
+            </li>
+
+            <li class="navbar-item">
+              <a
+                href="{{ url_for('contact') }}"
+                class="navbar-link"
+                data-navbar-link
+                >Contact Us</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <button class="nav-open-btn" aria-label="Open Menu" data-nav-open-btn>
+          <ion-icon name="menu-outline"></ion-icon>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <section class="hero" id="home">
+          <div class="container">
+            <div class="hero-content">
+              <p class="hero-subtitle">
+                {{ site_content.hero.subtitle if site_content and
+                site_content.hero else 'We Are Product Designer From India' }}
+              </p>
+
+              <h2 class="h2 hero-title">
+                {{ site_content.hero.title if site_content and site_content.hero
+                else 'We Design Interfaces That Users Love' }}
+              </h2>
+
+              <p class="hero-text">
+                {{ site_content.hero.description if site_content and
+                site_content.hero else 'Morbi sed lacus nec risus finibus
+                feugiat et fermentum nibh. Pellentesque vitae ante at elit
+                fringilla ac at purus.' }}
+              </p>
+
+              <a href="{{ url_for('services') }}" class="btn">Learn More</a>
+            </div>
+
+            <figure class="hero-banner">
+              <img
+                src="{{ url_for('static', filename='images/hero-banner.png') }}"
+                width="694"
+                height="529"
+                loading="lazy"
+                alt="hero-banner"
+                class="w-100 banner-animation"
+              />
+            </figure>
+          </div>
+        </section>
+
+        <section class="section about" id="about">
+          <div class="container">
+            <figure class="about-banner">
+              <img
+                src="{{ url_for('static', filename='images/about-banner.png') }}"
+                width="700"
+                height="532"
+                loading="lazy"
+                alt="about banner"
+                class="w-100 banner-animation"
+              />
+            </figure>
+
+            <div class="about-content">
+              <h2 class="h2 section-title underline">
+                {{ site_content.about.title if site_content and
+                site_content.about else 'Why Our Agency' }}
+              </h2>
+
+              <p class="about-text">
+                {{ site_content.about.description1 if site_content and
+                site_content.about else 'In dictum aliquam turpis lacinia
+                iaculis. Fusce vel malesuada magna. Nulla vel maximus risus.
+                Donec volutpat metus lacinia risus accumsan, ac bibendum libero
+                efficitur. Pellentesque nec nisi sit amet magna tempus hendrerit
+                ut a odio.' }}
+              </p>
+
+              <p class="about-text">
+                {{ site_content.about.description2 if site_content and
+                site_content.about else 'Praesent rhoncus commodo tortor, id
+                pulvinar nisl blandit at. Nulla facilisi. Quisque turpis ante,
+                vehicula condimentum arcu.' }}
+              </p>
+
+              <ul class="stats-list">
+                <li class="stats-card">
+                  <p class="h3 stats-title">
+                    {{ site_content.about.stats.clients if site_content and
+                    site_content.about and site_content.about.stats else '9875'
+                    }}
+                  </p>
+
+                  <p class="stats-text">Satisfied Clients</p>
+                </li>
+
+                <li class="stats-card">
+                  <p class="h3 stats-title">
+                    {{ site_content.about.stats.projects if site_content and
+                    site_content.about and site_content.about.stats else '7894'
+                    }}
+                  </p>
+
+                  <p class="stats-text">Project Launched</p>
+                </li>
+
+                <li class="stats-card">
+                  <p class="h3 stats-title">
+                    {{ site_content.about.stats.years if site_content and
+                    site_content.about and site_content.about.stats else '65' }}
+                  </p>
+
+                  <p class="stats-text">Years Completed</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+        {% if announcements %}
+        <div class="announcement-section">
+          {% for announcement in announcements %}
+          <div
+            class="announcement-banner announcement-{{ announcement.type }}"
+            id="announcement-{{ announcement.id }}"
+          >
+            <div class="container">
+              <div class="announcement-content">
+                <span class="announcement-message"
+                  >{{ announcement.message }}</span
+                >
+                {% if announcement.link %}
+                <a href="{{ announcement.link }}" class="announcement-link">
+                  {{ announcement.link_text }} →
+                </a>
+                {% endif %}
+                <button
+                  class="announcement-close"
+                  onclick="closeAnnouncement({{ announcement.id }})"
+                  aria-label="Close announcement"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <section class="section service" id="services">
+          <div class="container">
+            <h2 class="h2 section-title underline">Our Specialization</h2>
+
+            <ul class="service-list">
+              {% for service in services %}
+              <li>
+                <div class="service-card">
+                  <div class="card-icon">
+                    <ion-icon name="{{ service.icon }}"></ion-icon>
+                  </div>
+
+                  <h3 class="h3 title">{{ service.title }}</h3>
+
+                  <p class="text">{{ service.description }}</p>
+
+                  <a
+                    href="{{ url_for('services', service_name=service.title.lower().replace(' ', '-').replace('&', '')) }}"
+                    class="card-btn"
+                    aria-label="Show More"
+                  >
+                    <div class="icon-text">
+                      <ion-icon name="chevron-forward-outline"></ion-icon>
+                      <span>Click here</span>
+                    </div>
+                  </a>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </section>
+
+        <section class="section features" id="features">
+          <div class="container">
+            <h2 class="h2 section-title underline">Our Features</h2>
+
+            <ul class="features-list">
+              {% for feature in features[:2] %}
+              <li>
+                <div class="features-card">
+                  <div class="icon">
+                    <ion-icon name="{{ feature.icon }}"></ion-icon>
+                  </div>
+
+                  <div class="content">
+                    <h3 class="h3 title">{{ feature.title }}</h3>
+
+                    <p class="text">{{ feature.description }}</p>
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+
+            <figure class="features-banner">
+              <img
+                src="{{ url_for('static', filename='images/feautres-banner.png') }}"
+                width="369"
+                height="318"
+                loading="lazy"
+                alt="Features Banner"
+                class="w-100 banner-animation"
+              />
+            </figure>
+
+            <ul class="features-list">
+              {% for feature in features[2:] %}
+              <li>
+                <div class="features-card">
+                  <div class="icon">
+                    <ion-icon name="{{ feature.icon }}"></ion-icon>
+                  </div>
+
+                  <div class="content">
+                    <h3 class="h3 title">{{ feature.title }}</h3>
+
+                    <p class="text">{{ feature.description }}</p>
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </section>
+
+        <section class="section blog" id="blog">
+          <div class="container">
+            <h2 class="h2 section-title underline">Our Blog & News</h2>
+
+            <ul class="blog-list">
+              {% for post in blog_posts %}
+              <li>
+                <div class="blog-card">
+                  <figure class="banner">
+                    <a href="{{ url_for('blog', post_id=post.id) }}">
+                      <img
+                        src="{{ post.image or url_for('static', filename='images/default-blog.jpg') }}"
+                        width="750"
+                        height="350"
+                        loading="lazy"
+                        alt="{{ post.title }}"
+                        class="img-cover"
+                      />
+                    </a>
+                  </figure>
+
+                  <div class="content">
+                    <h3 class="h3 title">
+                      <a href="{{ url_for('blog', post_id=post.id) }}">
+                        {{ post.title }}
+                      </a>
+                    </h3>
+
+                    <p class="text">{{ post.content[:150] }}...</p>
+
+                    <div class="meta">
+                      <div class="publish-date">
+                        <ion-icon name="time-outline"></ion-icon>
+
+                        <time datetime="{{ post.date }}">{{ post.date }}</time>
+                      </div>
+
+                      <button class="comment" aria-label="Comment">
+                        <ion-icon name="chatbubble-outline"></ion-icon>
+
+                        <data
+                          value="{{ post.comments|length if post.comments else 0 }}"
+                          >{{ post.comments|length if post.comments else 0
+                          }}</data
+                        >
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-top section">
+        <div class="container">
+          <div class="footer-brand">
+            <a href="{{ url_for('index') }}" class="logo">Shramic Community</a>
+            <p class="text">
+              {{ site_content.hero.title if site_content and site_content.hero
+              else 'We Design Interfaces That Users Love' }}
+            </p>
+            <ul class="social-list">
+              <li>
+                <a href="#" class="social-link">
+                  <ion-icon name="logo-facebook"></ion-icon>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/shramic.info"
+                  class="social-link"
+                >
+                  <ion-icon name="logo-instagram"></ion-icon>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="social-link">
+                  <ion-icon name="logo-twitter"></ion-icon>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Our links</p></li>
+            <li>
+              <a href="{{ url_for('index') }}" class="footer-link">Home</a>
+            </li>
+            <li>
+              <a href="{{ url_for('index') }}#about" class="footer-link"
+                >About Us</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('services') }}" class="footer-link"
+                >Services</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://agriconnect1.pythonanywhere.com/"
+                class="footer-link"
+                >Social Hub</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('blog') }}" class="footer-link">Blog</a>
+            </li>
+          </ul>
+          <ul class="footer-list">
+            <li>
+              <p class="footer-list-title">Our Services</p>
+            </li>
+
+            {% for service in services %}
+            <li>
+              <a href="{{ url_for('services') }}" class="footer-link"
+                >{{ service.title }}</a
+              >
+            </li>
+            {% endfor %}
+          </ul>
+
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Other links</p></li>
+            <li><a href="{{ url_for('faq') }}" class="footer-link">FAQ</a></li>
+            <li>
+              <a href="{{ url_for('portfolio') }}" class="footer-link"
+                >Portfolio</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('privacy') }}" class="footer-link"
+                >Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('terms') }}" class="footer-link"
+                >Terms & Conditions</a
+              >
+            </li>
+            <li>
+              <a href="{{ url_for('support') }}" class="footer-link">Support</a>
+            </li>
+          </ul>
+
+          <ul class="footer-list">
+            <li><p class="footer-list-title">Contact Us</p></li>
+            <li class="footer-item">
+              <div class="footer-item-icon">
+                <ion-icon name="call"></ion-icon>
+              </div>
+              <div>
+                <a href="tel:+91 9876543210" class="footer-item-link"
+                  >+91 98765 43210</a
+                >
+              </div>
+            </li>
+            <li class="footer-item">
+              <div class="footer-item-icon">
+                <ion-icon name="mail"></ion-icon>
+              </div>
+              <div>
+                <a
+                  href="mailto:sharmikconnect@gmail.com"
+                  class="footer-item-link"
+                  >sharmikconnect@gmail.com</a
+                >
+              </div>
+            </li>
+            <li class="footer-item">
+              <div class="footer-item-icon">
+                <ion-icon name="location"></ion-icon>
+              </div>
+              <address class="footer-item-link">
+                Bengaluru, Karnataka, India
+              </address>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copyright">
+          &copy; 2024 <a href="#" class="copyright-link">Shramic Community</a>.
+          All Right Reserved
+        </p>
+      </div>
+    </footer>
+
+    <a href="#top" class="go-top active" aria-label="Go To Top" data-go-top>
+      <ion-icon name="arrow-up-outline"></ion-icon>
+    </a>
+
+    <script>
+      "use strict";
+
+      const navOpenBtn = document.querySelector("[data-nav-open-btn]");
+      const navbar = document.querySelector("[data-navbar]");
+      const navCloseBtn = document.querySelector("[data-nav-close-btn]");
+      const overlay = document.querySelector("[data-overlay]");
+
+      const elemArr = [navCloseBtn, overlay, navOpenBtn];
+
+      for (let i = 0; i < elemArr.length; i++) {
+        elemArr[i].addEventListener("click", function () {
+          navbar.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
+      }
+
+      /**
+       * toggle navbar & overlay when click any navbar-link
+       */
+
+      const navbarLinks = document.querySelectorAll("[data-navbar-link]");
+
+      for (let i = 0; i < navbarLinks.length; i++) {
+        navbarLinks[i].addEventListener("click", function () {
+          navbar.classList.toggle("active");
+          overlay.classList.toggle("active");
+        });
+      }
+
+      /**
+       * header & go-top-btn active
+       * when window scroll down to 400px
+       */
+
+      const header = document.querySelector("[data-header]");
+      const goTopBtn = document.querySelector("[data-go-top]");
+
+      window.addEventListener("scroll", function () {
+        if (window.scrollY >= 400) {
+          header.classList.add("active");
+          goTopBtn.classList.add("active");
+        } else {
+          header.classList.remove("active");
+          goTopBtn.classList.remove("active");
+        }
+      });
+
+      /**
+       * Flash message auto-hide
+       */
+      setTimeout(function () {
+        const flashMessages = document.querySelector(".flash-messages");
+        if (flashMessages) {
+          flashMessages.style.opacity = "0";
+          setTimeout(() => flashMessages.remove(), 300);
+        }
+      }, 5000);
+
+      /**
+       * Share post functionality
+       */
+      function sharePost(postId) {
+        fetch(`/blog/${postId}/share`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              // Update share count if needed
+              console.log("Post shared successfully");
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+          });
+      }
+    </script>
+    <script>
+      // Prevent zoom on desktop after 75%
+      if (window.innerWidth >= 768) {
+        document.addEventListener(
+          "wheel",
+          function (e) {
+            if (e.ctrlKey) {
+              e.preventDefault();
+            }
+          },
+          { passive: false }
+        );
+
+        document.addEventListener("keydown", function (e) {
+          if (
+            (e.ctrlKey || e.metaKey) &&
+            (e.key === "+" || e.key === "-" || e.key === "=")
+          ) {
+            e.preventDefault();
+          }
+        });
+      }
+
+      // Prevent pinch zoom on mobile and tablet
+      document.addEventListener(
+        "touchmove",
+        function (e) {
+          if (e.touches.length > 1) {
+            e.preventDefault();
+          }
+        },
+        { passive: false }
+      );
+
+      document.addEventListener("gesturestart", function (e) {
+        e.preventDefault();
+      });
+
+      document.addEventListener("gesturechange", function (e) {
+        e.preventDefault();
+      });
+
+      document.addEventListener("gestureend", function (e) {
+        e.preventDefault();
+      });
+
+      // Prevent double-tap zoom on mobile
+      let lastTouchEnd = 0;
+      document.addEventListener(
+        "touchend",
+        function (e) {
+          const now = new Date().getTime();
+          if (now - lastTouchEnd <= 300) {
+            e.preventDefault();
+          }
+          lastTouchEnd = now;
+        },
+        false
+      );
+    </script>
+    <script>
+      /**
+       * Close announcement banner
+       */
+      function closeAnnouncement(id) {
+        const banner = document.getElementById(`announcement-${id}`);
+        if (banner) {
+          banner.style.animation = "slideUp 0.3s ease-out forwards";
+          setTimeout(() => {
+            banner.remove();
+
+            // Check if all announcements are closed
+            const announcementSection = document.querySelector(
+              ".announcement-section"
+            );
+            if (
+              announcementSection &&
+              announcementSection.children.length === 0
+            ) {
+              announcementSection.remove();
+            }
+          }, 300);
+        }
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get closed announcements from localStorage
+        const closedAnnouncements = JSON.parse(
+          localStorage.getItem("closedAnnouncements") || "[]"
+        );
+
+        // Hide closed announcements
+        closedAnnouncements.forEach((id) => {
+          const banner = document.getElementById(`announcement-${id}`);
+          if (banner) {
+            banner.remove();
+          }
+        });
+
+        // Update close function to store in localStorage
+        window.closeAnnouncementPersistent = function (id) {
+          const closedAnnouncements = JSON.parse(
+            localStorage.getItem("closedAnnouncements") || "[]"
+          );
+          if (!closedAnnouncements.includes(id)) {
+            closedAnnouncements.push(id);
+            localStorage.setItem(
+              "closedAnnouncements",
+              JSON.stringify(closedAnnouncements)
+            );
+          }
+          closeAnnouncement(id);
+        };
+      });
+    </script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

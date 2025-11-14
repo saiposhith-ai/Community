@@ -1,0 +1,36 @@
+{% extends 'admin/layout.html' %} {% block title %}Add Service | Admin Panel{%
+endblock %} {% block content %}
+<div class="section-title-wrapper">
+  <h2 class="h2 section-title">Add New Service</h2>
+  <a href="{{ url_for('admin_services') }}" class="btn">
+    <span class="material-symbols-rounded icon">arrow_back</span>
+    <span>Back to Services</span>
+  </a>
+</div>
+
+<div class="card form-card">
+  <form method="POST" action="{{ url_for('admin_add_service') }}">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" name="title" required />
+    </div>
+    <div class="form-group">
+      <label for="icon">Icon Name</label>
+      <input
+        type="text"
+        id="icon"
+        name="icon"
+        required
+        placeholder="e.g., desktop-outline"
+      />
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-submit">
+      Add Service
+    </button>
+  </form>
+</div>
+{% endblock %}
